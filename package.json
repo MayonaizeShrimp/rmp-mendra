@@ -1,0 +1,25 @@
+{
+  "name": "rmp-mendra",
+  "version": "1.0.0",
+  "description": "medical record management system for dr Mendra",
+  "main": "index.js",
+  "scripts": {
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run build:frontend && npm run build:backend",
+    "serve": "cd backend && npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayonaizeShrimp/rmp-mendra.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MayonaizeShrimp/rmp-mendra/issues"
+  },
+  "homepage": "https://github.com/MayonaizeShrimp/rmp-mendra#readme",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
+}
