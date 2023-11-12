@@ -1,13 +1,14 @@
 import express from "express";
 import path from "path";
+import testDataRouter from "./controllers/TestData";
 
 const app = express();
 const port = 5000;
 
-app.get('/api/test', (req, res) => {
-	res.json("hello world");
-});
+//use test router
+app.use('/api/TestData', testDataRouter)
 
+//serve built frontend result from `npm run build:frontend`
 app.use(express.static(path.join(__dirname, '../../frontend/build')))
 
 app.listen(port, () => {

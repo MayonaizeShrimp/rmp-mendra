@@ -1,4 +1,5 @@
 import { Button, Col, Row } from 'antd';
+import { SampleTable } from './partials/sample-table';
 
 function App() {
     return <Row>
@@ -6,11 +7,21 @@ function App() {
             <Button
                 type='primary'
                 children="button 1"/>
-        </Col>
-        <Col span={20}>
+            <Button
+                type='default'
+                children="button 2"/>
             <Button
                 type='dashed'
-                children="button 2"/>
+                children="button 3"/>
+            <Button
+                type='text'
+                children="button 4"/>
+            <Button
+                type='link'
+                children="button 5"/>
+        </Col>
+        <Col span={20}>
+            <SampleTable/>
         </Col>
     </Row>
 }
