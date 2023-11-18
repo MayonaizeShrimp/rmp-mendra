@@ -2,6 +2,8 @@ import { Button, Card, Col, Flex, Input, Row } from 'antd';
 import { SampleTable } from './partials/sample-table';
 import { UserAddOutlined } from "@ant-design/icons"
 import Meta from 'antd/es/card/Meta';
+import { BiodataForm } from './partials/biodata-form';
+import { MedicRecordForm } from './partials/medic-record-form';
 
 const PatientCard = (props: {name: string, dob: string, uuid: string}) => <Card hoverable>
     
@@ -47,9 +49,10 @@ function App() {
             </Flex>
         </Col>
         <Col span={14}>
-            <SampleTable/>
+            <BiodataForm patient_id={1} />
         </Col>
         <Col span={5}>
+            <MedicRecordForm/>
         </Col>
     </Row>
 }
