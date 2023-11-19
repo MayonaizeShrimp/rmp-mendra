@@ -9,13 +9,6 @@ const labelConfig = {span: 8};
 export const MedicRecordForm = () => {
 	return <Form labelWrap labelAlign="left" colon={false}>
 		<Flex vertical gap={16}>
-			<Flex justify="space-between">
-				<Typography.Title level={2} style={{margin: 0}}>Kunjungan</Typography.Title>
-				<Flex justify="end" gap={8}>
-					<Button size="large" type="primary">Save</Button>
-					<Button size="large">Reset</Button>
-				</Flex>
-			</Flex>
 			<Card>
 				<Row gutter={8}>
 					<Col span={24}>
@@ -40,7 +33,6 @@ export const MedicRecordForm = () => {
 						<Item name="" labelCol={labelConfig} label="Hasil Lab" rules={[{ required: true }]}><TextArea /></Item>
 					</Col>
 				</Row>
-
 			</Card>
 		</Flex>
 	</Form>
