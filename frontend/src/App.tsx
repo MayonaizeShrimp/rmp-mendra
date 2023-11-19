@@ -2,7 +2,7 @@ import { Button, Col, Flex, Input, Row, Typography } from 'antd';
 import { UserAddOutlined } from "@ant-design/icons"
 import { BiodataForm } from './partials/biodata-form';
 import { MedicRecordForm } from './partials/medic-record-form';
-import PatientCard from './partials/patient-list';
+import PatientCard from './partials/patient-card';
 import { CSSProperties } from 'react';
 import "./style.css";
 

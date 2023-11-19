@@ -9,7 +9,7 @@ interface PatientCardProps {
 }
 
 const pCSS : CSSProperties = {
-    marginBottom: 1
+    marginBottom: 0
 }
 
 const PatientCard = (props: PatientCardProps) => (

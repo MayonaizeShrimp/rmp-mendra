@@ -21,9 +21,9 @@ export const MedicRecordForm = () => {
 						<Item name="" labelCol={labelConfig} label="Lingkar Perut"><Input /></Item>
 					</Col>
 					<Col span={12}>
-						<Item name="" labelCol={labelConfig} label="Thread Starter"><Input /></Item>
-						<Item name="" labelCol={labelConfig} label="Tekanan Darah"><Input /></Item>
-					</Col>
+						<Item name="" labelCol={labelConfig} label="Sistole"><Input /></Item>
+						<Item name="" labelCol={labelConfig} label="Diastole"><Input /></Item>
+					</Col>	
 					<Divider />
 					<Col span={24}>
 						<Item name="" labelCol={labelConfig} label="Keluhan" rules={[{ required: true }]}><Input /></Item>
