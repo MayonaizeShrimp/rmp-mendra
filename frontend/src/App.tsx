@@ -1,24 +1,28 @@
-import { Button, Col, Flex, Input, Typography } from 'antd';
+import { Button, Col, Flex, Input, Row, Typography } from 'antd';
 import { UserAddOutlined } from "@ant-design/icons"
 import { BiodataForm } from './partials/biodata-form';
 import { MedicRecordForm } from './partials/medic-record-form';
 import PatientCard from './partials/patient-list';
+import { CSSProperties } from 'react';
+
+const implementCSSScroll : CSSProperties = {
+    overflowY: 'auto',  //allow component to overflow
+    height: '90vh' , //fix bug not overflowing properly
+}
 
 function App() {
-    return <div style={{ display: 'flex', height: '97vh', overflow: 'hidden' }}>
+    return <Row gutter={16} style={{height: "95vh", maxHeight: "95vh"}}>
         <Col span={5}>
-            <Flex vertical style={{ height: '100%' }}>
-                <div style={{ position: 'sticky', top: 0, background: 'white', padding: '16px' }}>
-                    <Flex gap={8}>
-                        <Input.Search type="text" placeholder="Cari Pasien" size="large" allowClear />
-                        <Button type="primary" size="large">
-                            <UserAddOutlined /> Pasien Baru
-                        </Button>
-                    </Flex>
-                </div>
+            <Flex vertical gap={16}>
+                <Flex gap={8}>
+                    <Input.Search type="text" placeholder="Cari Pasien" size="large" allowClear />
+                    <Button type="primary" size="large">
+                        <UserAddOutlined />
+                    </Button>
+                </Flex>
                 <Flex
-                    style={{ height: '100%', overflowY: 'auto' }}
-                    gap={0}
+                    style={{ height: '90vh', overflowY: 'auto' }}
+                    gap={8}
                     vertical={true}
                     children={[
                         <PatientCard name={'Budi Budi Budi Budi'} dob={'2023-08-08'} uuid={'s'} />,
@@ -46,21 +50,21 @@ function App() {
             </Flex>
         </Col>
         <Col span={12}>
-            <div style={{ position: 'sticky', top: 0, background: 'white', padding: '16px' }}>
-                <Flex justify="space-between">
+            <Flex vertical gap={16}>
+                <Flex justify="space-between" >
                     <Typography.Title level={2} style={{ margin: 0 }}>Biodata Pasien</Typography.Title>
                     <Flex justify="end" gap={8}>
                         <Button size="large" type="primary">Save</Button>
                         <Button size="large">Reset</Button>
                     </Flex>
                 </Flex>
-            </div>
-            <div style={{ overflowY: 'auto', height: '90%' }}>
-                <BiodataForm patient_id={1} />
-            </div>
+                <Flex style={implementCSSScroll}>
+                    <BiodataForm patient_id={1} />
+                </Flex>
+            </Flex>
         </Col>
         <Col span={7}>
-            <div style={{ position: 'sticky', top: 0, background: 'white', padding: '16px' }}>
+            <Flex vertical gap={16}>
                 <Flex justify="space-between">
                     <Typography.Title level={2} style={{ margin: 0 }}>Kunjungan</Typography.Title>
                     <Flex justify="end" gap={8}>
@@ -68,12 +72,12 @@ function App() {
                         <Button size="large">Reset</Button>
                     </Flex>
                 </Flex>
-            </div>
-            <div style={{ overflowY: 'auto', height: '90%' }}>
-                <MedicRecordForm />
-            </div>
+                <Flex style={implementCSSScroll}>
+                    <MedicRecordForm />
+                </Flex>
+            </Flex>
         </Col>
-    </div>
+    </Row>
 }
 
 export default App;
