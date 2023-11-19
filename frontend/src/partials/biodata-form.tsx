@@ -1,7 +1,10 @@
 import { Button, Card, Col, DatePicker, Flex, Form, Input, Radio, Row, Table, Typography } from "antd"
 import { ColumnType } from "antd/es/table";
 import dayjs from "dayjs";
+import { useState, useEffect } from "react";
 import { TestData } from "shared/interfaces";
+import { TestDataModel } from "src/models/TestData";
+import "../style.css";
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -22,35 +25,38 @@ const recordColumns : ColumnType<TestData>[] = [
 	{
 		key: "name",
 		title: "BB",
-		dataIndex: "name",
+		dataIndex: "id",
 	},
 	{
 		key: "manufacturer",
-		title: "LB",
-		dataIndex: "manufacturer",
+		title: "LP",
+		dataIndex: "id",
 	},
 	{
 		key: "expiry_date",
 		title: "TS",
-		dataIndex: "expiry_date",
+		dataIndex: "id",
 	},
 	{
-		title: "TD"
+		title: "TD",
+		dataIndex: "id",
 	},
 	{
-		title: "Keluhan"
+		title: "Keluhan",
+		dataIndex: "name",
 	},
 	{
-		title: "ICD 10"
+		title: "ICD 10",
 	},
 	{
-		title: "Dx/Primer"
+		title: "Dx/Primer",
 	},
 	{
 		title: "Terapi",
+		dataIndex: "manufacturer",
 	},
 	{
-		title: "Hasil Lab"
+		title: "Hasil Lab",
 	},
 ]
 
@@ -59,7 +65,18 @@ interface BiodataFormProps {
 }
 
 export const BiodataForm = (props: BiodataFormProps) => {
+	const [testData, setTestData] = useState<TestData[]>([]);
 
+	useEffect(() => {
+		TestDataModel.get()
+			.then(res => {
+				console.log(`${res.length} test data is fetched from backend`);
+				setTestData(res);
+			})
+			.catch(err => {
+				console.error(`error when fetching from test backend`, err);
+			})
+	}, []);
 
 	return <Form name="biodata-form">
 		<Flex vertical gap={16}>
@@ -108,6 +125,9 @@ export const BiodataForm = (props: BiodataFormProps) => {
 			</Card>
 			<Table
 				bordered
+				rowKey="id"
+				rowClassName={(_, index) => index % 2 == 0 ? 'table-row-light' : 'table-row-dark'}
+				dataSource={testData}
 				columns={recordColumns}
 				/>
 		</Flex>
