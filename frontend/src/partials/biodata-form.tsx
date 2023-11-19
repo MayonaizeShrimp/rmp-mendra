@@ -10,7 +10,7 @@ import '../style.css';
 const { Item } = Form;
 const { TextArea } = Input;
 
-const labelConfig = { span: 8 };
+const labelConfig = { span: 6 };
 
 const recordColumns: ColumnType<TestData>[] = [
 	{
@@ -80,20 +80,20 @@ export const BiodataForm = (props: BiodataFormProps) => {
 	}, []);
 
 	return (
-		<Form name="biodata-form">
+		<Form name="biodata-form" labelWrap={true} colon={false} wrapperCol={{span: 16}}>
 			<Flex vertical gap={16}>
-				<Card>
+				<Card size='small'>	
 					<Row gutter={16}>
 						<Col span={12}>
 							<Item name="name" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
-								<Input style={{ width: '100%' }} />
+								<Input />
 							</Item>
 							<Item name="tanggal lahir" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
-								<DatePicker value={dayjs()} format="DD MMMM YYYY" style={{ width: '100%' }} />
+								<DatePicker value={dayjs()} format="DD MMMM YYYY" />
 							</Item>
 							<Item
 								name="gender"
-								label="Jenis Kelamin:"
+								label="Jenis Kelamin"
 								rules={[{ required: true }]}
 								labelCol={labelConfig}
 								style={{ marginBottom: 0 }}
@@ -106,22 +106,22 @@ export const BiodataForm = (props: BiodataFormProps) => {
 						</Col>
 						<Col span={12}>
 							<Item name="uuid" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
-								<Input style={{ width: '100%' }} />
+								<Input />
 							</Item>
 							<Item name="umur" label="Umur" rules={[{ required: true }]} labelCol={labelConfig}>
-								<Input readOnly value="10 tahun" style={{ width: '100%' }} />
+								<Input readOnly value="10 tahun"/>
 							</Item>
 							<Item name="allergies" label="Alergi" rules={[{ required: true }]} labelCol={labelConfig}>
-								<TextArea style={{ width: '100%' }} />
+								<TextArea />
 							</Item>
 						</Col>
 					</Row>
 				</Card>
-				<Card>
+				<Card size='small' >
 					<Row gutter={16}>
 						<Col span={12}>
 							<Item name="ktp" label="No KTP" rules={[{ required: true }]} labelCol={labelConfig}>
-								<Input style={{ width: '100%' }} />
+								<Input/>
 							</Item>
 							<Item name="type" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
 								<Radio.Group>
@@ -142,10 +142,10 @@ export const BiodataForm = (props: BiodataFormProps) => {
 						</Col>
 						<Col span={12}>
 							<Item name="phone" label="No HP" rules={[{ required: true }]} labelCol={labelConfig}>
-								<Input style={{ width: '100%' }} />
+								<Input />
 							</Item>
 							<Item name="address" label="Alamat" rules={[{ required: true }]} labelCol={labelConfig}>
-								<TextArea style={{ width: '100%', margin: '0 auto' }} />
+								<TextArea />
 							</Item>
 						</Col>
 					</Row>

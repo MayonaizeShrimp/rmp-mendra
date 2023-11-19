@@ -1,22 +1,25 @@
-import React from 'react';
-import { Card, Flex } from 'antd';
+import { Card, Flex } from "antd";
+import { CSSProperties } from "react";
 
 const { Meta } = Card;
-
 interface PatientCardProps {
   name: string;
   dob: string;
   uuid: string;
 }
 
-const PatientCard: React.FC<PatientCardProps> = (props) => (
-<Card hoverable style={{ padding: '1px', height: '95px' }}>
-  <Meta title={`${props.name}`} />
-  <Flex justify="space-between">
-    <p>{props.uuid}</p>
-    <p>{props.dob}</p>
-  </Flex>
-</Card>
+const pCSS : CSSProperties = {
+    marginBottom: 1
+}
+
+const PatientCard = (props: PatientCardProps) => (
+  <Card hoverable bodyStyle={{ padding: 12 }}>
+    <Meta title={`${props.name}`} />
+    <Flex justify="space-between">
+      <p style={pCSS}>{props.uuid}</p>
+      <p style={pCSS}>{props.dob}</p>
+    </Flex>
+  </Card>
 );
 
 export default PatientCard;
