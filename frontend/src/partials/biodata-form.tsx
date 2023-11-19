@@ -1,5 +1,58 @@
-import { Col, Flex, Form, Input, Row } from "antd"
-import { SampleTable } from "./sample-table"
+import { Button, Card, Col, DatePicker, Flex, Form, Input, Radio, Row, Table, Typography } from "antd"
+import { ColumnType } from "antd/es/table";
+import dayjs from "dayjs";
+import { TestData } from "shared/interfaces";
+
+const { Item } = Form;
+const { TextArea } = Input;
+
+const labelConfigShort = {span: 4};
+
+const recordColumns : ColumnType<TestData>[] = [
+	{
+		key: "Tanggal",
+		title: "Tanggal",
+		render: (v, r, index) => index,
+	},
+	{
+		key: "id",
+		title: "TB",
+		dataIndex: "id",
+	},
+	{
+		key: "name",
+		title: "BB",
+		dataIndex: "name",
+	},
+	{
+		key: "manufacturer",
+		title: "LB",
+		dataIndex: "manufacturer",
+	},
+	{
+		key: "expiry_date",
+		title: "TS",
+		dataIndex: "expiry_date",
+	},
+	{
+		title: "TD"
+	},
+	{
+		title: "Keluhan"
+	},
+	{
+		title: "ICD 10"
+	},
+	{
+		title: "Dx/Primer"
+	},
+	{
+		title: "Terapi",
+	},
+	{
+		title: "Hasil Lab"
+	},
+]
 
 interface BiodataFormProps {
 	patient_id: number,
@@ -8,27 +61,55 @@ interface BiodataFormProps {
 export const BiodataForm = (props: BiodataFormProps) => {
 
 
-	return <Flex vertical={true}>
-		<Form name="biodata-form">
-			<Row>
-				<Col span={12}>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-				</Col>
-				<Col span={12}>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-					<Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}><Input /></Form.Item>
-				</Col>
-			</Row>
-		</Form>
-		<SampleTable/>
-	</Flex>
+	return <Form name="biodata-form">
+		<Flex vertical gap={16}>
+			<Flex justify="space-between">
+				<Typography.Title level={2} style={{margin: 0}}>Biodata Pasien</Typography.Title>
+				<Flex justify="end" gap={8}>
+					<Button size="large" type="primary">Save</Button>
+					<Button size="large">Reset</Button>
+				</Flex>
+			</Flex>
+			<Card>
+				<Row gutter={16}>
+					<Col span={12}>
+						<Item name="name" label="Nama" rules={[{ required: true }]} labelCol={labelConfigShort}><Input /></Item>
+						<Item label="Umur" rules={[{ required: true }]} labelCol={labelConfigShort}><Input readOnly value="10 tahun" bordered={false}/></Item>
+					</Col>
+					<Col span={12}>
+						<Item name="uuid" label="No Pasien" rules={[{ required: true }]}><Input /></Item>
+						<Item name="allergies" label="Alergi" rules={[{ required: true }]}><TextArea /></Item>
+					</Col>
+					<Col span={24}>
+						<Flex gap={16}>
+							<Item label="Tanggal Lahir" rules={[{ required: true }]}><DatePicker value={dayjs()} format="DD MMMM YYYY"/></Item>
+							<Item name="gender" label="Jenis Kelamin" rules={[{ required: true }]}>
+								<Radio.Group>
+									<Radio value={1}> Pria </Radio>
+									<Radio value={0}> Wanita </Radio>
+								</Radio.Group>
+							</Item>
+						</Flex>
+
+					</Col>
+				</Row>
+			</Card>
+			<Card>
+				<Item name="ktp" label="KTP" rules={[{ required: true }]}><Input /></Item>
+				<Item name="type" label="Tipe" rules={[{ required: true }]}>
+					<Radio.Group>
+						<Radio value={0}> BPJS </Radio>
+						<Radio value={1}> Umum </Radio>
+						<Radio value={2}> BI Aktif </Radio>
+						<Radio value={3}> BI Pensiun </Radio>
+					</Radio.Group></Item>
+				<Item name="phone" label="No HP" rules={[{ required: true }]}><Input /></Item>
+				<Item name="address" label="Alamat" rules={[{ required: true }]}><Input /></Item>
+			</Card>
+			<Table
+				bordered
+				columns={recordColumns}
+				/>
+		</Flex>
+	</Form>
 }
