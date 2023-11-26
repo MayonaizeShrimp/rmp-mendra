@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     Alergi: DataTypes.JSON,
     NoHp: DataTypes.STRING,
-    JenisKelamin: DataTypes.ENUM
+    JenisKelamin: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Patient',

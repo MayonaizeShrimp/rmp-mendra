@@ -61,7 +61,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       JenisKelamin: {
-        type: Sequelize.ENUM
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
