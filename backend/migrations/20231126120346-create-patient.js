@@ -27,16 +27,13 @@ module.exports = {
         validate: {
           notEmpty: {
             args: true,
-            msg: "Nama must not empty"
+            msg: "Tanggal Lahir must not empty"
           },
           notNull: {
             args: true,
-            msg: "Nama must not empty"
+            msg: "Tanggal Lahir must not empty"
           }
         }
-      },
-      Umur: {
-        type: Sequelize.INTEGER
       },
       KTP: {
         type: Sequelize.STRING
@@ -50,12 +47,12 @@ module.exports = {
       TipePasienId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "PatientStatuses",
+          model: "PatientTypes",
           key: "id"
         }
       },
       Alergi: {
-        type: Sequelize.JSON
+        type: Sequelize.STRING
       },
       NoHp: {
         type: Sequelize.STRING

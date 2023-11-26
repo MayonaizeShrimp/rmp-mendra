@@ -9,6 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      Tanggal: {
+        type: Sequelize.DATE,
+      },
       TinggiBadan: {
         type: Sequelize.INTEGER
       },
@@ -27,7 +30,7 @@ module.exports = {
       Keluhan: {
         type: Sequelize.STRING
       },
-      Dx: {
+      DxPrimer: {
         type: Sequelize.STRING
       },
       HasilLab: {
