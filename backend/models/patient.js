@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Patient.belongsTo(models.PatientStatus)
     }
   }
   Patient.init({
@@ -32,9 +33,12 @@ module.exports = (sequelize, DataTypes) => {
     KTP: DataTypes.STRING,
     NoPasien: DataTypes.STRING,
     Alamat: DataTypes.STRING,
-    TipePasien:{
-      type: DataTypes.ENUM,
-      values: ["BPJS", "UMUM", "BI Aktif", "BI Pensiun"]
+    TipePasienId:{
+      type: DataTypes.INTEGER,
+      references: {
+        model: PatientStatus,
+        key: "id"
+      }
     },
     Alergi: DataTypes.JSON,
     NoHp: DataTypes.STRING,

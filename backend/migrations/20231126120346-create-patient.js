@@ -47,9 +47,12 @@ module.exports = {
       Alamat: {
         type: Sequelize.STRING
       },
-      TipePasien: {
-        type: Sequelize.ENUM,
-        values: ["BPJS", "UMUM", "BI Aktif", "BI Pensiun"]
+      TipePasienID: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "PatientStatuses",
+          key: "id"
+        }
       },
       Alergi: {
         type: Sequelize.JSON

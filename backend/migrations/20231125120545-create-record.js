@@ -18,9 +18,6 @@ module.exports = {
       LingkarPerut: {
         type: Sequelize.INTEGER
       },
-      ThreadStarter: {
-        type: Sequelize.INTEGER
-      },
       Sistol: {
         type: Sequelize.INTEGER
       },

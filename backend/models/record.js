@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     TinggiBadan: DataTypes.INTEGER,
     BeratBadan: DataTypes.INTEGER,
     LingkarPerut: DataTypes.INTEGER,
-    ThreadStarter: DataTypes.INTEGER,
     Sistol: DataTypes.INTEGER,
     Diastol:DataTypes.INTEGER,
     Keluhan: DataTypes.STRING,
