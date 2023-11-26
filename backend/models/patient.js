@@ -11,7 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Patient.belongsTo(models.PatientStatus)
+      Patient.belongsTo(models.PatientStatus, {
+        foreignKey: "TipePasienId"
+      })
+      Patient.hasOne(models.Record, {
+        foreignKey: "PatientId"
+      })
     }
   }
   Patient.init({
@@ -20,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: "Nama must not empty"
+          msg: "Nama cannot be empty"
         },
         notNull: {
           args: true,
-          msg: "Nama must not empty"
+          msg: "Nama cannot be empty"
         }
       }
     },
@@ -35,6 +40,12 @@ module.exports = (sequelize, DataTypes) => {
     Alamat: DataTypes.STRING,
     TipePasienId:{
       type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "TipePasienId cannot be empty"
+        }
+      },
       references: {
         model: PatientStatus,
         key: "id"

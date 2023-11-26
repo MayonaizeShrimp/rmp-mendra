@@ -33,6 +33,13 @@ module.exports = {
       HasilLab: {
         type: Sequelize.STRING
       },
+      PatientId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Patients",
+          key: "id"
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -47,7 +47,7 @@ module.exports = {
       Alamat: {
         type: Sequelize.STRING
       },
-      TipePasienID: {
+      TipePasienId: {
         type: Sequelize.INTEGER,
         references: {
           model: "PatientStatuses",

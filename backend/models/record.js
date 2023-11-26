@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Record.belongsTo(models.Patient,{
+        foreignKey: "PatientId"
+      })
     }
   }
   Record.init({
@@ -21,7 +24,16 @@ module.exports = (sequelize, DataTypes) => {
     Diastol:DataTypes.INTEGER,
     Keluhan: DataTypes.STRING,
     Dx: DataTypes.STRING,
-    HasilLab: DataTypes.STRING
+    HasilLab: DataTypes.STRING,
+    PatientId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "PatientId cannot be empty"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Record',
