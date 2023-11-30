@@ -13,30 +13,26 @@ const implementCSSScroll: CSSProperties = {
 };
 
 const DUMMY_PATIENT = [
-  <PatientCard name={"Budi Budi Budi Budi"} dob={"2023-08-08"} uuid={"s"} />,
-  <PatientCard
-    name={"Charlie Charlie Charlie Charlie Charlie Charlie"}
-    dob={"2023-08-08"}
-    uuid={"asdfsadf"}
-  />,
-  <PatientCard name={"Dimas Uwu"} dob={"asdf"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
-  <PatientCard name={"Emil"} dob={"2023-08-08"} uuid={"asdfsadf"} />,
+  { name: "Budi Budi Budi Budi", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Dimas", dob: "asdf", uuid: "asdfsadf" },
+  {
+    name: "Charlie Charlie Charlie Charlie Charlie Charlie",
+    dob: "asdf",
+    uuid: "asdfsadf",
+  },
+  { name: "Emil", dob: "2023-08-08", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
+  { name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
 ];
 
 function App() {
@@ -50,10 +46,10 @@ function App() {
 
   const filterPatients = (query: string) => {
     const filteredPatients = DUMMY_PATIENT.filter((patient) => {
-      const nameMatches = patient.props.name
+      const nameMatches = patient.name
         .toLowerCase()
         .includes(query.toLowerCase());
-      const uuidMatches = patient.props.uuid
+      const uuidMatches = patient.uuid
         .toLowerCase()
         .includes(query.toLowerCase());
       return nameMatches || uuidMatches;
@@ -83,12 +79,16 @@ function App() {
               <UserAddOutlined />
             </Button>
           </Flex>
-          <Flex
-            style={implementCSSScroll}
-            gap={8}
-            vertical
-            children={filteredPatients}
-          />
+          <Flex style={implementCSSScroll} gap={8} vertical>
+            {filteredPatients.map((patient, index) => (
+              <PatientCard
+                key={index}
+                name={patient.name}
+                dob={patient.dob}
+                uuid={patient.uuid}
+              />
+            ))}
+          </Flex>
         </Flex>
       </Col>
       <Col span={12}>
