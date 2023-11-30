@@ -61,6 +61,7 @@ function App() {
     filterPatients(searchQuery);
   };
 
+  
   return (
     <Row gutter={16} style={{ height: "90vh" }}>
       <Col span={5}>
@@ -111,17 +112,6 @@ function App() {
       </Col>
       <Col span={7}>
         <Flex vertical gap={16} style={{ height: "95vh" }}>
-          <Flex justify="space-between">
-            <Typography.Title level={2} style={{ margin: 0 }}>
-              Kunjungan
-            </Typography.Title>
-            <Flex justify="end" gap={8}>
-              <Button size="large" type="primary">
-                Save
-              </Button>
-              <Button size="large">Reset</Button>
-            </Flex>
-          </Flex>
           <Flex style={implementCSSScroll}>
             <MedicRecordForm />
           </Flex>
