@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   Col,
@@ -13,15 +12,11 @@ import {
 } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { CSSProperties } from "react";
 
 const { Item } = Form;
 const { TextArea } = Input;
 
 const labelConfig = { span: 8 };
-const implementCSSScroll: CSSProperties = {
-	overflowY: "auto", height: "100%",  width: "100%"
-};
 
 interface FormValues {
   tanggal: dayjs.Dayjs;
@@ -45,30 +40,22 @@ export const MedicRecordForm = () => {
 
   return (
     <Form labelWrap labelAlign="left" colon={false} onFinish={onFinish}>
-      <Flex vertical gap={16} style={{ width: "100%", height: "95vh" }}>
+      <Flex vertical gap={16} style={{ maxHeight: "95vh" }}>
         <Flex justify="space-between">
-          <Typography.Title level={2} style={{ margin: 0 }}>
-            Kunjungan
-          </Typography.Title>
+          <Typography.Title level={2} style={{ margin: 0 }}>Kunjungan</Typography.Title>
           <Flex justify="end" gap={8}>
-            <Button size="large" type="primary" htmlType="submit">
-              Save
-            </Button>
-            <Button size="large">Reset</Button>
-			<Button size="large" type="text">
-			<CloseOutlined />
-			</Button>
+            <Button size="large" type="primary" htmlType="submit">Save</Button>
+            <Button size="large" htmlType="reset">Reset</Button>
+            <Button size="large" type="text"><CloseOutlined /></Button>
           </Flex>
         </Flex>
-        <Flex style={implementCSSScroll}>
-          <Card style={{height:"110%"}}>
+          <Card className="scrollToHeight">
             <Row gutter={8}>
               <Col span={24}>
                 <Item
                   name="tanggal"
                   label="Tanggal"
-                  style={{ marginBottom: 0 }}
-                >
+                  style={{ marginBottom: 0 }}>
                   <DatePicker value={dayjs()} format="DD MMMM YYYY" />
                 </Item>
               </Col>
@@ -77,22 +64,19 @@ export const MedicRecordForm = () => {
                 <Item
                   name="tinggiBadan"
                   labelCol={labelConfig}
-                  label="Tinggi Badan"
-                >
+                  label="Tinggi Badan">
                   <Input />
                 </Item>
                 <Item
                   name="beratBadan"
                   labelCol={labelConfig}
-                  label="Berat Badan"
-                >
+                  label="Berat Badan">
                   <Input />
                 </Item>
                 <Item
                   name="lingkarPerut"
                   labelCol={labelConfig}
-                  label="Lingkar Perut"
-                >
+                  label="Lingkar Perut">
                   <Input />
                 </Item>
               </Col>
@@ -110,46 +94,40 @@ export const MedicRecordForm = () => {
                   name="keluhan"
                   labelCol={labelConfig}
                   label="Keluhan"
-                  rules={[{ required: true }]}
-                >
+                  rules={[{ required: true }]}>
                   <Input />
                 </Item>
                 <Item
                   name="icd10"
                   labelCol={labelConfig}
                   label="ICD 10"
-                  rules={[{ required: true }]}
-                >
+                  rules={[{ required: true }]}>
                   <Input />
                 </Item>
                 <Item
                   name="dxPrimer"
                   labelCol={labelConfig}
                   label="Dx/Primer"
-                  rules={[{ required: true }]}
-                >
+                  rules={[{ required: true }]}>
                   <TextArea />
                 </Item>
                 <Item
                   name="terapi"
                   labelCol={labelConfig}
                   label="Terapi"
-                  rules={[{ required: true }]}
-                >
+                  rules={[{ required: true }]}>
                   <TextArea />
                 </Item>
                 <Item
                   name="hasilLab"
                   labelCol={labelConfig}
                   label="Hasil Lab"
-                  rules={[{ required: true }]}
-                >
+                  rules={[{ required: true }]}>
                   <TextArea />
                 </Item>
               </Col>
             </Row>
           </Card>
-        </Flex>
       </Flex>
     </Form>
   );
