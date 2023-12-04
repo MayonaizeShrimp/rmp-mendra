@@ -1,7 +1,11 @@
 body{
     margin: 0;
     padding: 12px;
-    background-color: aquamarine;
+    background-color: lightgray;
+}
+
+.scrollToHeight{
+    overflow-y: auto;
 }
 
 /* width */
