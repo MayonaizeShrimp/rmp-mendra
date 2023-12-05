@@ -1,23 +1,20 @@
 import { Card, Flex } from "antd";
+import dayjs from "dayjs";
 import { CSSProperties } from "react";
+import { IPatient } from "shared/interfaces";
 
 const { Meta } = Card;
-interface PatientCardProps {
-  name: string;
-  dob: string;
-  uuid: string;
-}
 
 const pCSS : CSSProperties = {
     marginBottom: 0
 }
 
-const PatientCard = (props: PatientCardProps) => (
+const PatientCard = (props: {patient: IPatient}) => (
   <Card hoverable bodyStyle={{ padding: 12 }}>
-    <Meta title={`${props.name}`} />
+    <Meta title={`${props.patient.Nama}`} />
     <Flex justify="space-between">
-      <p style={pCSS}>{props.uuid}</p>
-      <p style={pCSS}>{props.dob}</p>
+      <p style={pCSS}>{props.patient.NoPasien}</p>
+      <p style={pCSS}>{dayjs(props.patient.TanggalLahir).format("DD MMM YYYY")}</p>
     </Flex>
   </Card>
 );
