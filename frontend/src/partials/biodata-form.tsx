@@ -64,6 +64,19 @@ interface BiodataFormProps {
 	patient_id: number,
 }
 
+interface BiodataValues {
+	nama: string,
+	tanggalLahir: dayjs.Dayjs,
+	gender: string,
+	uuid: string,
+	umur: string,
+	allergies: string,
+	ktp: string,
+	type: string,
+	phone: string,
+	address: string,
+}
+
 export const BiodataForm = (props: BiodataFormProps) => {
 	const [testData, setTestData] = useState<TestData[]>([]);
 
@@ -78,8 +91,12 @@ export const BiodataForm = (props: BiodataFormProps) => {
 			})
 	}, []);
 
+	const onFinish = (values: BiodataValues) => {
+		console.log("Biodata Values:", values)
+	}
+
 	return (
-		<Form name="biodata-form" labelWrap={true} colon={false} wrapperCol={{span: 16}}>
+		<Form name="biodata-form" labelWrap={true} colon={false} wrapperCol={{span: 16}} onFinish={onFinish}>
 			<Flex vertical gap={16} style={{ height: "95vh" }}>
 				<Flex justify="space-between">
 					<Typography.Title level={2} style={{ margin: 0 }}>
@@ -96,9 +113,9 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							<Row gutter={16}>
 								<Col span={12}>
 									<Item name="name" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input />
+										<Input type='text'/>
 									</Item>
-									<Item name="tanggal lahir" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="tanggalLahir" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
 										<DatePicker value={dayjs()} format="DD MMMM YYYY" />
 									</Item>
 									<Item
@@ -108,17 +125,17 @@ export const BiodataForm = (props: BiodataFormProps) => {
 										labelCol={labelConfig}
 										style={{ marginBottom: 0 }}>
 										<Radio.Group style={{}}>
-											<Radio value={1}> Pria </Radio>
-											<Radio value={0}> Wanita </Radio>
+											<Radio value={"Pria"}> Pria </Radio>
+											<Radio value={"Wanita"}> Wanita </Radio>
 										</Radio.Group>
 									</Item>
 								</Col>
 								<Col span={12}>
 									<Item name="uuid" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input />
+										<Input type='text'/>
 									</Item>
 									<Item name="umur" label="Umur" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input readOnly value="10 tahun"/>
+										<Input type='text'/>
 									</Item>
 									<Item name="allergies" label="Alergi" rules={[{ required: true }]} labelCol={labelConfig}>
 										<TextArea />
@@ -130,28 +147,28 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							<Row gutter={16}>
 								<Col span={12}>
 									<Item name="ktp" label="No KTP" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input/>
+										<Input type='text'/>
 									</Item>
 									<Item name="type" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Radio.Group>
 											<div style={{ marginBottom: '8px', marginTop: '6px' }}>
-												<Radio value={0}> BPJS </Radio>
+												<Radio value={"BPJS"}> BPJS </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={1}> Umum </Radio>
+												<Radio value={"Umum"}> Umum </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={2}> BI Aktif </Radio>
+												<Radio value={"BI Aktif"}> BI Aktif </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={3}> BI Pensiun </Radio>
+												<Radio value={"BI Pensiun"}> BI Pensiun </Radio>
 											</div>
 										</Radio.Group>
 									</Item>
 								</Col>
 								<Col span={12}>
 									<Item name="phone" label="No HP" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input />
+										<Input type='text' />
 									</Item>
 									<Item name="address" label="Alamat" rules={[{ required: true }]} labelCol={labelConfig}>
 										<TextArea />
