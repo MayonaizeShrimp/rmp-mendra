@@ -48,7 +48,6 @@ Patient.init(
 	}
 )
 
-Patient.hasMany(PatientType, {
-	as: "patientType",
+Patient.belongsTo(PatientType, {
 	foreignKey: "patientTypeId"
 })
