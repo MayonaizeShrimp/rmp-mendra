@@ -1,27 +1,26 @@
 import express from "express";
 import path from "path";
-import testDataRouter from "./controllers/TestData";
 import cors from 'cors';
+import patientsRouter from "./controllers/patients";
+import { connectToDB } from "./models";
 
 const app = express();
 const port = 5000;
 
 //cors
-
-const allowedOrigins = ['http://localhost:3000'];
-
 const options: cors.CorsOptions = {
-  origin: allowedOrigins
+  origin: ['http://localhost:3000'],
 };
+app.use(cors(options));
 
-app.use(cors(options))
-
-//use test router
-app.use('/api/TestData', testDataRouter);
+//use implement routers
+app.use('/api/patients', patientsRouter);
 
 //serve built frontend result from `npm run build:frontend`
-app.use(express.static(path.join(__dirname, '../../frontend/build')))
+app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
-app.listen(port, () => {
-	console.log(`Server running at http://localhost:${port}`);
-})
+connectToDB().then(() => {
+	app.listen(port, () => {
+		console.log(`Server running at http://localhost:${port}`);
+	})
+});
