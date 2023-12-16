@@ -16,7 +16,7 @@ export interface IPatient {
 	nama: string,
 	tanggalLahir: Date,
 	ktp: string,
-	nomorPasien: string,
+	noPasien: string,
 	alamat: string,
 	patientTypeId: number,
 	alergi: string,
