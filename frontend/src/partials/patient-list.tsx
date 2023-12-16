@@ -1,35 +1,30 @@
 import { UserAddOutlined } from "@ant-design/icons"
-import { Flex, Input, Button } from "antd"
-import PatientCard from "./patient-card"
+import { Flex, Input, Button, Card } from "antd"
 import { useState } from "react";
+import { IPatient } from "shared/interfaces";
+import dayjs from "dayjs";
 
-const DUMMY_PATIENT = [
-	{ name: "Budi Budi Budi Budi", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Dimas", dob: "asdf", uuid: "asdfsadf" },
-	{
-	  name: "Charlie Charlie Charlie Charlie Charlie Charlie",
-	  dob: "asdf",
-	  uuid: "asdfsadf",
-	},
-	{ name: "Emil", dob: "2023-08-08", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-  ];
-  
+const { Meta } = Card;
 
-export const PatientList = () => {
+interface PatientCardProps {
+  name: string;
+  dob: string;
+  uuid: string;
+}
+
+const PatientCard = (props: PatientCardProps) => (
+  <Card hoverable bodyStyle={{ padding: 12 }}>
+    <Meta title={`${props.name}`} />
+    <Flex justify="space-between">
+      <p style={{marginBottom: 0}}>{props.uuid}</p>
+      <p style={{marginBottom: 0}}>{dayjs(props.dob).format("D MMM YYYY")}</p>
+    </Flex>
+  </Card>
+);
+
+export const PatientList = (props : {patients : IPatient[]}) => {
 	const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState(DUMMY_PATIENT);
+  const [filteredPatients, setFilteredPatients] = useState<IPatient[]>(props.patients);
 
   const handleSearchInputChange = (event: string) => {
     setSearchQuery(event);
@@ -37,11 +32,11 @@ export const PatientList = () => {
   };
 
   const filterPatients = (query: string) => {
-    const filteredPatients = DUMMY_PATIENT.filter((patient) => {
-      const nameMatches = patient.name
+    const filteredPatients = props.patients.filter((patient) => {
+      const nameMatches = patient.nama
         .toLowerCase()
         .includes(query.toLowerCase());
-      const uuidMatches = patient.uuid
+      const uuidMatches = patient.noPasien
         .toLowerCase()
         .includes(query.toLowerCase());
       return nameMatches || uuidMatches;
@@ -72,9 +67,9 @@ export const PatientList = () => {
             {filteredPatients.map((patient, index) => (
               <PatientCard
                 key={index}
-                name={patient.name}
-                dob={patient.dob}
-                uuid={patient.uuid}
+                name={patient.nama}
+                dob={patient.tanggalLahir}
+                uuid={patient.noPasien}
               />
             ))}
           </Flex>
