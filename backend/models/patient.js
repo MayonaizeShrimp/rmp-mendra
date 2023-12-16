@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Patient.belongsTo(models.PatientStatus, {
+      Patient.belongsTo(models.PatientType, {
         foreignKey: "TipePasienId"
       })
       Patient.hasOne(models.Record, {
@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     TanggalLahir: DataTypes.DATE,
-    Umur: DataTypes.INTEGER,
     KTP: DataTypes.STRING,
     NoPasien: DataTypes.STRING,
     Alamat: DataTypes.STRING,
@@ -51,31 +50,13 @@ module.exports = (sequelize, DataTypes) => {
         key: "id"
       }
     },
-    Alergi: DataTypes.JSON,
-    NoHp: DataTypes.STRING,
+    Alergi: DataTypes.STRING,
+    NoHP: DataTypes.STRING,
     JenisKelamin: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Patient',
   });
-
-  Patient.beforeCreate((patient, option) => {
-  const currentDate = new Date();
-  const birthDate = new Date(patient.DateOfBirth);
-
-  const age = currentDate.getFullYear() - birthDate.getFullYear();
-
-  if(
-    currentDate.getMonth() < birthDate.getMonth() ||
-    (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())
-  ){
-    patient.age = age - 1;
-  }
-  else{
-    patient.age = age;
-  }
-  
-  })
 
   return Patient;
 };

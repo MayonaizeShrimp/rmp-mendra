@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "mysql",
-    "database": "rmp-mendra",
+    "password": "root",
+    "database": "rmp_mendra",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

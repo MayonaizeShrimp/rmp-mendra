@@ -9,34 +9,37 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TinggiBadan: {
+      tanggal: {
+        type: Sequelize.DATE,
+      },
+      tinggiBadan: {
         type: Sequelize.INTEGER
       },
-      BeratBadan: {
+      beratBadan: {
         type: Sequelize.INTEGER
       },
-      LingkarPerut: {
+      lingkarPerut: {
         type: Sequelize.INTEGER
       },
-      Sistol: {
+      sistole: {
         type: Sequelize.INTEGER
       },
-      Diastol: {
+      diastole: {
         type: Sequelize.INTEGER
       },
-      Keluhan: {
+      keluhan: {
         type: Sequelize.STRING
       },
-      Dx: {
+      dxPrimer: {
         type: Sequelize.STRING
       },
-      HasilLab: {
+      hasilLab: {
         type: Sequelize.STRING
       },
-      PatientId: {
+      patientId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Patients",
+          model: "patients",
           key: "id"
         }
       },
@@ -51,6 +54,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Records');
+    await queryInterface.dropTable('records');
   }
 };

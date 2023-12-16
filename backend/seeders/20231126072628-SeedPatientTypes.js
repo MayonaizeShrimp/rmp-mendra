@@ -32,7 +32,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('PatientStatuses', statuses, {});
+    await queryInterface.bulkInsert('PatientTypes', statuses, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -42,6 +42,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('PatientStatuses', null, {});
+    await queryInterface.bulkDelete('PatientTypes', null, {});
   }
 };

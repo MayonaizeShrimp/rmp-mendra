@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     Sistol: DataTypes.INTEGER,
     Diastol:DataTypes.INTEGER,
     Keluhan: DataTypes.STRING,
-    Dx: DataTypes.STRING,
+    DxPrimer: DataTypes.STRING,
     HasilLab: DataTypes.STRING,
     PatientId: {
       type: DataTypes.INTEGER,

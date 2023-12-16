@@ -2,65 +2,62 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Patients', {
+    await queryInterface.createTable('patients', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Nama: {
+      nama: {
         type: Sequelize.STRING,
         validate: {
           notEmpty: {
             args: true,
-            msg: "Nama must not empty"
+            msg: "Name must not empty"
           },
           notNull: {
             args: true,
-            msg: "Nama must not empty"
+            msg: "Name must not empty"
           }
         }
       },
-      TanggalLahir: {
+      tanggalLahir: {
         type: Sequelize.DATE,
         validate: {
           notEmpty: {
             args: true,
-            msg: "Nama must not empty"
+            msg: "Tanggal Lahir must not empty"
           },
           notNull: {
             args: true,
-            msg: "Nama must not empty"
+            msg: "Tanggal Lahir must not empty"
           }
         }
       },
-      Umur: {
-        type: Sequelize.INTEGER
-      },
-      KTP: {
+      ktp: {
         type: Sequelize.STRING
       },
-      NoPasien: {
+      noPasien: {
         type: Sequelize.STRING
       },
-      Alamat: {
+      alamat: {
         type: Sequelize.STRING
       },
-      TipePasienId: {
+      patientTypeId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "PatientStatuses",
+          model: "patient-types",
           key: "id"
         }
       },
-      Alergi: {
-        type: Sequelize.JSON
-      },
-      NoHp: {
+      alergi: {
         type: Sequelize.STRING
       },
-      JenisKelamin: {
+      hp: {
+        type: Sequelize.STRING
+      },
+      gender: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {
@@ -74,6 +71,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Patients');
+    await queryInterface.dropTable('patients');
   }
 };
