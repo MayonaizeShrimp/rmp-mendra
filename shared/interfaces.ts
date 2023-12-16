@@ -12,9 +12,9 @@ export interface IPatientStatus {
 }
 
 export interface IPatient {
-	id: number,
+	id?: number,
 	nama: string,
-	tanggalLahir: Date,
+	tanggalLahir: string,
 	ktp: string,
 	noPasien: string,
 	alamat: string,
@@ -25,7 +25,7 @@ export interface IPatient {
 }
 
 export interface IRecord {
-	id: number,
+	id?: number,
 	tanggal: string,
 	tinggiBadan: number,
 	beratBadan: number,

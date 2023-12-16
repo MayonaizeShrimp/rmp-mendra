@@ -2,7 +2,6 @@ import { CreationOptional, DataTypes, ForeignKey, Model, NonAttribute, Optional 
 import { EGender, IPatient } from "../../../shared/interfaces";
 import { PatientType } from "./PatientType";
 import { sequelize } from ".";
-import { Record } from "./Record";
 
 type PatientCreationAttributes = Optional<IPatient, 'id'>
 
