@@ -2,6 +2,7 @@ import express from "express";
 import { Patient } from "../models/Patient";
 import { PatientType } from "../models/PatientType";
 import { Record } from "../models/Record";
+import { UpdateOptions } from "sequelize";
 
 
 const patientsRouter = express.Router();
@@ -24,10 +25,26 @@ patientsRouter.get('/:id', async (req, res) => {
 		.catch(err => res.status(500).json(err));
 })
 
-// patientsRouter.post('/', async (req, res) => {
-// 	ProfileModel.create({name: req.body.name})
-// 		.then(newData => res.status(201).json(createSuccessResponse(newData)))
-// 		.catch(err => res.status(500).json(createErrorResponse(err)))
-// })
+patientsRouter.post('/', async (req, res) => {
+	Patient.create({...req.body})
+		.then(newData => res.status(201).json(newData))
+		.catch(err => res.status(500).json(err))
+})
+
+patientsRouter.put("/:id", async(req, res) => {
+	const condition : UpdateOptions = {
+		where: {id: req.params.id}
+	};
+
+	Patient.update({...req.body}, condition)
+		.then(updateResult => {
+			const [affectedRows] = updateResult;
+
+			if (affectedRows === 0) res.status(404).json({error: "Patient not found"});
+			
+			res.json({success: true});
+		})
+		.catch(err => res.status(500).json({error: err}));
+});
 
 export default patientsRouter; 
