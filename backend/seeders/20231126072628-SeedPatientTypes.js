@@ -2,16 +2,16 @@
 
 const statuses = [
   {
-    name: "BPJS",
+    nama: "BPJS",
   },
   {
-    name: "UMUM"
+    nama: "UMUM"
   },
   {
-    name: "BI Aktif"
+    nama: "BI Aktif"
   },
   {
-    name: "BI Pensiun"
+    nama: "BI Pensiun"
   },
 ]
 
@@ -32,7 +32,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('PatientTypes', statuses, {});
+    await queryInterface.bulkInsert('patient-types', statuses, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -42,6 +42,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('PatientTypes', null, {});
+    await queryInterface.bulkDelete('patient-types', null, {});
   }
 };
