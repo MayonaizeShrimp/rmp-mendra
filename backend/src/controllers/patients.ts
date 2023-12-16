@@ -1,6 +1,7 @@
 import express from "express";
 import { Patient } from "../models/Patient";
 import { PatientType } from "../models/PatientType";
+import { Record } from "../models/Record";
 
 
 const patientsRouter = express.Router();
@@ -14,7 +15,7 @@ patientsRouter.get('/', async (req, res) => {
 });
 
 patientsRouter.get('/:id', async (req, res) => {
-	Patient.findByPk(req.params.id, {include: PatientType})
+	Patient.findByPk(req.params.id, {include: [PatientType, Record]})
 		.then(patient => {
 			if (!patient) return res.status(404).json(patient);
 			
