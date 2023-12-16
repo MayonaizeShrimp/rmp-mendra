@@ -8,36 +8,37 @@ export interface TestData {
 
 export interface IPatientStatus {
 	id: number,
-	Nama: string,
+	nama: string,
 }
 
 export interface IPatient {
-	Id: number,
-	Nama: string,
-	TanggalLahir: Date,
-	KTP: string,
-	NomorPasien: string,
-	Alamat: string,
-	TipePasienId: number,
-	Alergi: string,
-	NoHP: string,
-	JenisKelamin: boolean,
+	id: number,
+	nama: string,
+	tanggalLahir: Date,
+	ktp: string,
+	nomorPasien: string,
+	alamat: string,
+	patientTypeId: number,
+	alergi: string,
+	hp: string,
+	gender: EGender,
 }
 
 export interface IRecord {
 	id: number,
-	TinggiBadan: number,
-	BeratBadan: number,
-	LingkarPerut: number,
-	Sistol: number,
-	Diastol: number,
-	Keluhan: string,
-	DxPrimer: string,
-	HasilLab: string,
-	PatientId: number,
+	tanggal: string,
+	tinggiBadan: number,
+	beratBadan: number,
+	lingkarPerut: number,
+	sistole: number,
+	diastole: number,
+	keluhan: string,
+	dxPrimer: string,
+	hasilLab: string,
+	patientId: number,
 }
 
-export const jenisKelaminEnum = {
-	FEMALE: 0,
-	MALE: 1,
+export enum EGender {
+	FEMALE= 0,
+	MALE= 1,
 }
