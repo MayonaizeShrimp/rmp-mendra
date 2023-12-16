@@ -37,11 +37,8 @@ patientsRouter.put("/:id", async(req, res) => {
 	};
 
 	Patient.update({...req.body}, condition)
-		.then(updateResult => {
-			const [affectedRows] = updateResult;
-
-			if (affectedRows === 0) res.status(404).json({error: "Patient not found"});
-			
+		.then(([affectedRows]) => {
+			if (affectedRows === 0) return res.status(404).json({error: "Patient not found"});
 			res.json({success: true});
 		})
 		.catch(err => res.status(500).json({error: err}));

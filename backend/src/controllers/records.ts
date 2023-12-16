@@ -1,6 +1,5 @@
 import express from "express";
 import { Record } from "../models/Record";
-import { PatientType } from "../models/PatientType";
 import { UpdateOptions } from "sequelize";
 
 
@@ -36,11 +35,21 @@ recordsRouter.put("/:id", async(req, res) => {
 	};
 
 	Record.update({...req.body}, condition)
-		.then(updateResult => {
-			const [affectedRows] = updateResult;
+		.then(([affectedRows]) => {
+			if (affectedRows === 0) return res.status(404).json({error: "Record not found"});
+			res.json({success: true});
+		})
+		.catch(err => res.status(500).json({error: err}));
+});
 
-			if (affectedRows === 0) res.status(404).json({error: "Record not found"});
-			
+
+recordsRouter.delete("/:id", async(req, res) => {
+	const condition : UpdateOptions = {
+		where: {id: req.params.id}
+	};
+	Record.destroy(condition)
+		.then(deletedRows => {
+			if (deletedRows === 0) return res.status(404).json({error: "Record not found"});
 			res.json({success: true});
 		})
 		.catch(err => res.status(500).json({error: err}));
