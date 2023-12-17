@@ -7,13 +7,20 @@ import dayjs from "dayjs";
 const { Meta } = Card;
 
 interface PatientCardProps {
+  id: number;
   name: string;
   dob: string;
   uuid: string;
+  onClick: Function;
+}
+
+interface PatientListProps {
+  patients: IPatient[],
+  onClick: Function,
 }
 
 const PatientCard = (props: PatientCardProps) => (
-  <Card hoverable bodyStyle={{ padding: 12 }}>
+  <Card hoverable bodyStyle={{ padding: 12 }} onClick={() => props.onClick(props.id)}>
     <Meta title={`${props.name}`} />
     <Flex justify="space-between">
       <p style={{marginBottom: 0}}>{props.uuid}</p>
@@ -22,56 +29,15 @@ const PatientCard = (props: PatientCardProps) => (
   </Card>
 );
 
-export const PatientList = (props : {patients : IPatient[]}) => {
-	const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState<IPatient[]>(props.patients);
-
-  const handleSearchInputChange = (event: string) => {
-    setSearchQuery(event);
-    filterPatients(event); // comment this line to test search bar onSearch function only
-  };
-
-  const filterPatients = (query: string) => {
-    const filteredPatients = props.patients.filter((patient) => {
-      const nameMatches = patient.nama
-        .toLowerCase()
-        .includes(query.toLowerCase());
-      const uuidMatches = patient.noPasien
-        .toLowerCase()
-        .includes(query.toLowerCase());
-      return nameMatches || uuidMatches;
-    });
-    setFilteredPatients(filteredPatients);
-  };
-
-  const handleSearch = () => {
-    filterPatients(searchQuery);
-  };
-
-	return <Flex vertical gap={16} style={{ height: "95vh" }}>
-          <Flex gap={8}>
-            <Input.Search
-              onChange={(event) => handleSearchInputChange(event.target.value)}
-              onSearch={handleSearch}
-              value={searchQuery}
-              type="text"
-              placeholder="Cari Pasien"
-              size="large"
-              allowClear
-            />
-            <Button type="primary" size="large">
-              <UserAddOutlined />
-            </Button>
-          </Flex>
-          <Flex className="scrollToHeight" gap={8} vertical>
-            {filteredPatients.map((patient, index) => (
+export const PatientList = (props : PatientListProps) => {
+	return <>{props.patients.map((patient, index) => (
               <PatientCard
-                key={index}
+                key={patient.id}
+                id={patient.id as number}
                 name={patient.nama}
                 dob={patient.tanggalLahir}
                 uuid={patient.noPasien}
+                onClick={props.onClick}
               />
-            ))}
-          </Flex>
-        </Flex>
+            ))}</>
 }
