@@ -1,5 +1,6 @@
 import { UserAddOutlined } from "@ant-design/icons";
-import { Row, Col, Flex, Button, Input } from "antd";
+import { Row, Col, Flex, Button, Input, Typography, Form } from "antd";
+import { useForm } from "antd/es/form/Form";
 import { ContentLayout } from "src/components/content-layout";
 import { HeaderLayout } from "src/components/header-layout";
 import { VerticalLayout } from "src/components/vertical-layout";
@@ -15,27 +16,14 @@ export const MainPage = () => {
   return (
     <Row gutter={16} style={{ height: "90vh" }}>
       <Col span={5}>
-        <VerticalLayout>
-          <HeaderLayout>
-            <Input.Search
-              onChange={(event) => em.handleSearchPatient(event.target.value)}
-              onSearch={em.handleSearchPatient}
-              type="text"
-              placeholder="Cari Pasien"
-              size="large"
-              allowClear
-            />
-            <Button type="primary" size="large">
-              <UserAddOutlined />
-            </Button>
-          </HeaderLayout>
-          <ContentLayout>
-            <PatientList patients={em.filteredPatients} onClick={em.handleClickPatientCard}/>
-          </ContentLayout>
-        </VerticalLayout>
+        <PatientList 
+          patients={em.filteredPatients} 
+          onSearchPatient={em.handleSearchPatient} 
+          onClickAddPatient={em.handleClickAddNewPatient} 
+          onClickPatient={em.handleClickPatientCard}/>
       </Col>
       <Col span={12}>
-        <BiodataForm patient_id={1} />
+          <BiodataForm patient_id={em.selectedPatientId} />
       </Col>
       <Col span={7}>
         <Flex vertical gap={16} style={{ height: "95vh" }}>

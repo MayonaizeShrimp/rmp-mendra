@@ -3,6 +3,9 @@ import { Flex, Input, Button, Card } from "antd"
 import { useState } from "react";
 import { IPatient } from "shared/interfaces";
 import dayjs from "dayjs";
+import { ContentLayout } from "src/components/content-layout";
+import { HeaderLayout } from "src/components/header-layout";
+import { VerticalLayout } from "src/components/vertical-layout";
 
 const { Meta } = Card;
 
@@ -16,7 +19,9 @@ interface PatientCardProps {
 
 interface PatientListProps {
   patients: IPatient[],
-  onClick: Function,
+  onSearchPatient: Function,
+  onClickAddPatient: Function,
+  onClickPatient: Function,
 }
 
 const PatientCard = (props: PatientCardProps) => (
@@ -30,14 +35,31 @@ const PatientCard = (props: PatientCardProps) => (
 );
 
 export const PatientList = (props : PatientListProps) => {
-	return <>{props.patients.map((patient, index) => (
-              <PatientCard
-                key={patient.id}
-                id={patient.id as number}
-                name={patient.nama}
-                dob={patient.tanggalLahir}
-                uuid={patient.noPasien}
-                onClick={props.onClick}
-              />
-            ))}</>
+  return <VerticalLayout>
+    <HeaderLayout>
+      <Input.Search
+        onChange={(event) => props.onSearchPatient(event.target.value)}
+        onSearch={(val) => props.onSearchPatient(val)}
+        type="text"
+        placeholder="Cari Pasien"
+        size="large"
+        allowClear
+      />
+      <Button type="primary" size="large" onClick={() => props.onClickAddPatient()}>
+        <UserAddOutlined />
+      </Button>
+    </HeaderLayout>
+    <ContentLayout>
+      {props.patients.map((patient, index) => (
+        <PatientCard
+          key={patient.id}
+          id={patient.id as number}
+          name={patient.nama}
+          dob={patient.tanggalLahir}
+          uuid={patient.noPasien}
+          onClick={props.onClickAddPatient}
+        />
+      ))}
+    </ContentLayout>
+  </VerticalLayout>
 }

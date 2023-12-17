@@ -3,7 +3,7 @@ import { IPatient } from "shared/interfaces";
 import { usePatientsModel } from "./usePatientsModel";
 
 export const useEventManager = () => {
-	const [selectedPatientId, setSelectedPatientId] = useState<number>(1);
+	const [selectedPatientId, setSelectedPatientId] = useState<number>(0);
 
 	const [filteredPatients, setFilteredPatients] = useState<IPatient[]>([]);
 
@@ -26,14 +26,20 @@ export const useEventManager = () => {
 		setFilteredPatients(filteredPatients);
 	};
 
+	const handleClickAddNewPatient = () => {
+		setSelectedPatientId(0);
+	}
+
 	const handleClickPatientCard = (id: number) => {
-		console.log(id);
+		setSelectedPatientId(id);
 	}
 
 	return {
 		...patientsModel,
 		filteredPatients,
+		selectedPatientId,
 		handleSearchPatient,
+		handleClickAddNewPatient,
 		handleClickPatientCard,
 	}
 }
