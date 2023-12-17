@@ -21,7 +21,8 @@ export interface IPatient {
 	patientTypeId: number,
 	alergi: string,
 	hp: string,
-	gender: EGender,
+	gender: number,
+	Records?: IRecord[],
 }
 
 export interface IRecord {
@@ -39,6 +40,11 @@ export interface IRecord {
 }
 
 export enum EGender {
-	FEMALE= 0,
-	MALE= 1,
+	FEMALE=0,
+	MALE=1,
+}
+
+export interface IGender {
+	FEMALE: 0,
+	MALE: 1,
 }

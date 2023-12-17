@@ -18,7 +18,10 @@ export const MainPage = () => {
           onClickPatient={em.handleClickPatientCard}/>
       </Col>
       <Col span={12}>
-          <BiodataForm patient_id={em.selectedPatientId} />
+          <BiodataForm 
+            patient_id={em.selectedPatientId}
+            selected_patient={em.selectedPatient}
+             />
       </Col>
       <Col span={7}>
         <Flex vertical gap={16} style={{ height: "95vh" }}>

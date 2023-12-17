@@ -1,9 +1,23 @@
 import { useEffect, useState } from "react";
-import { IPatient } from "shared/interfaces";
 import { usePatientsModel } from "./usePatientsModel";
+import { IPatient } from "shared/interfaces";
+
+const EMPTY_PATIENT : IPatient = {
+	nama: "",
+	tanggalLahir: "",
+	ktp: "",
+	noPasien: "",
+	alamat: "",
+	patientTypeId: 0,
+	alergi: "",
+	hp: "",
+	gender: 0,
+	Records: [],
+}
 
 export const useEventManager = () => {
 	const [selectedPatientId, setSelectedPatientId] = useState<number>(0);
+	const [selectedPatient, setSelectedPatient] = useState<IPatient>(EMPTY_PATIENT);
 
 	const [filteredPatients, setFilteredPatients] = useState<IPatient[]>([]);
 
@@ -31,13 +45,18 @@ export const useEventManager = () => {
 	}
 
 	const handleClickPatientCard = (id: number) => {
-		setSelectedPatientId(id);
+		patientsModel.getById(id)
+			.then(patient => setSelectedPatient(patient));
+	}
+
+	const handleSubmitBiodata = () => {
+
 	}
 
 	return {
-		...patientsModel,
 		filteredPatients,
 		selectedPatientId,
+		selectedPatient,
 		handleSearchPatient,
 		handleClickAddNewPatient,
 		handleClickPatientCard,

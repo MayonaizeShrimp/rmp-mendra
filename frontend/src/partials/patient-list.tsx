@@ -24,7 +24,7 @@ interface PatientListProps {
 }
 
 const PatientCard = (props: PatientCardProps) => (
-  <Card hoverable bodyStyle={{ padding: 12 }} onClick={() => props.onClick(props.id)}>
+  <Card hoverable bodyStyle={{ padding: 12 }} onClick={() => props.onClick()}>
     <Meta title={`${props.name}`} />
     <Flex justify="space-between">
       <p style={{marginBottom: 0}}>{props.uuid}</p>
@@ -56,7 +56,7 @@ export const PatientList = (props : PatientListProps) => {
           name={patient.nama}
           dob={patient.tanggalLahir}
           uuid={patient.noPasien}
-          onClick={props.onClickAddPatient}
+          onClick={() => props.onClickPatient(patient.id)}
         />
       ))}
     </ContentLayout>

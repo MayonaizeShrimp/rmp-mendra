@@ -10,12 +10,19 @@ export const usePatientsModel = () => {
 	}, []);
 
 	const getAll = async () => {
-		Patients.getAll()
+		return Patients.getAll()
 			.then(patients => setPatients(patients))
 			.catch(err => console.error(err));
 	}
 
+	const getById = async (id: number) => {
+		return Patients.getById(id)
+			// .catch(err => console.error(err))
+	}
+
 	return {
 		patients,
+		getAll,
+		getById,
 	}
 }

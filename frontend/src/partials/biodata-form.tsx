@@ -1,17 +1,20 @@
 import { Button, Card, Col, DatePicker, Flex, Form, Input, Radio, Row, Table, Typography } from 'antd';
 import { ColumnType } from 'antd/es/table';
 import { useEffect, useState } from 'react';
-import { TestData } from 'shared/interfaces';
+import { IPatient, IRecord, TestData } from 'shared/interfaces';
 import { TestDataModel } from 'src/models/TestData';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import '../style.css';
+import { VerticalLayout } from 'src/components/vertical-layout';
+import { HeaderLayout } from 'src/components/header-layout';
+import { ContentLayout } from 'src/components/content-layout';
 
 const { Item } = Form;
 const { TextArea } = Input;
 
 const labelConfig = { span: 6 };
 
-const recordColumns: ColumnType<TestData>[] = [
+const recordColumns: ColumnType<IRecord>[] = [
 	{
 		key: "Tanggal",
 		title: "Tanggal",
@@ -53,7 +56,7 @@ const recordColumns: ColumnType<TestData>[] = [
 	},
 	{
 		title: "Terapi",
-		dataIndex: "manufacturer",
+		dataIndex: "keluhan",
 	},
 	{
 		title: "Hasil Lab",
@@ -62,61 +65,56 @@ const recordColumns: ColumnType<TestData>[] = [
 
 interface BiodataFormProps {
 	patient_id: number,
+	selected_patient: IPatient,
 }
 
-interface BiodataValues {
-	nama: string,
-	tanggalLahir: dayjs.Dayjs,
-	gender: string,
-	uuid: string,
+interface IPatientForm extends IPatient{
+	tanggalLahirObject: Dayjs,
 	umur: string,
-	allergies: string,
-	ktp: string,
-	type: string,
-	phone: string,
-	address: string,
 }
 
 export const BiodataForm = (props: BiodataFormProps) => {
-	const [testData, setTestData] = useState<TestData[]>([]);
+	const [formData] = Form.useForm<IPatientForm>();
 
 	useEffect(() => {
-		TestDataModel.get()
-			.then(res => {
-				console.log(`${res.length} test data is fetched from backend`);
-				setTestData(res);
-			})
-			.catch(err => {
-				console.error(`error when fetching from test backend`, err);
-			})
-	}, []);
+		formData.setFieldsValue({
+			...props.selected_patient,
+			tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
+			umur: dayjs().diff(props.selected_patient.tanggalLahir, 'year') + " tahun",
+		});
+	}, [props.selected_patient]);
 
-	const onFinish = (values: BiodataValues) => {
+	const onFinish = (values: IPatient) => {
 		console.log("Biodata Values:", values)
 	}
 
 	return (
-		<Form name="biodata-form" labelWrap={true} colon={false} wrapperCol={{span: 16}} onFinish={onFinish}>
-			<Flex vertical gap={16} style={{ height: "95vh" }}>
-				<Flex justify="space-between">
+		<Form name="biodata-form" 
+			form={formData}
+			labelWrap={true} 
+			colon={false} 
+			wrapperCol={{span: 16}} 
+			onFinish={onFinish}>
+			<VerticalLayout>
+				<HeaderLayout>
 					<Typography.Title level={2} style={{ margin: 0 }}>
-					Biodata Pasien
+						Biodata Pasien
 					</Typography.Title>
 					<Flex justify="end" gap={8}>
 						<Button size="large" type="primary" htmlType='submit'>Save</Button>
 						<Button size="large" htmlType='reset'>Reset</Button>
 					</Flex>
-				</Flex>
-				<Flex className='scrollToHeight' vertical>
+				</HeaderLayout>
+				<ContentLayout>
 					<Flex vertical gap={16}>
 						<Card size='small'>	
 							<Row gutter={16}>
 								<Col span={12}>
-									<Item name="name" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="nama" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="tanggalLahir" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
-										<DatePicker value={dayjs()} format="DD MMMM YYYY" />
+									<Item name="tanggalLahirObject" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
+										<DatePicker format="DD MMMM YYYY" />
 									</Item>
 									<Item
 										name="gender"
@@ -124,20 +122,20 @@ export const BiodataForm = (props: BiodataFormProps) => {
 										rules={[{ required: true }]}
 										labelCol={labelConfig}
 										style={{ marginBottom: 0 }}>
-										<Radio.Group style={{}}>
-											<Radio value={"Pria"}> Pria </Radio>
-											<Radio value={"Wanita"}> Wanita </Radio>
+										<Radio.Group>
+											<Radio value={1}> Pria </Radio>
+											<Radio value={0}> Wanita </Radio>
 										</Radio.Group>
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="uuid" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="noPasien" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
 									<Item name="umur" label="Umur" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input type='text'/>
+										<Input type='text' readOnly/>
 									</Item>
-									<Item name="allergies" label="Alergi" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="alergi" label="Alergi" labelCol={labelConfig}>
 										<TextArea />
 									</Item>
 								</Col>
@@ -167,10 +165,10 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="phone" label="No HP" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="hp" label="No HP" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text' />
 									</Item>
-									<Item name="address" label="Alamat" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="alamat" label="Alamat" rules={[{ required: true }]} labelCol={labelConfig}>
 										<TextArea />
 									</Item>
 								</Col>
@@ -180,12 +178,12 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							bordered
 							rowKey="id"
 							rowClassName={(_, index) => (index % 2 === 0 ? 'table-row-light' : 'table-row-dark')}
-							dataSource={testData}
+							// dataSource={props.selected_patient.Records}
 							columns={recordColumns}
 						/>
 					</Flex>
-				</Flex>
-        	</Flex>
+				</ContentLayout>
+			</VerticalLayout>
 		</Form>
 	)
 }
