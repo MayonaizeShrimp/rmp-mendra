@@ -1,6 +1,5 @@
 import { UserAddOutlined } from "@ant-design/icons"
 import { Flex, Input, Button, Card } from "antd"
-import { useState } from "react";
 import { IPatient } from "shared/interfaces";
 import dayjs from "dayjs";
 import { ContentLayout } from "src/components/content-layout";

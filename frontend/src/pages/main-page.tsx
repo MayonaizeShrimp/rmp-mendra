@@ -1,9 +1,4 @@
-import { UserAddOutlined } from "@ant-design/icons";
-import { Row, Col, Flex, Button, Input, Typography, Form } from "antd";
-import { useForm } from "antd/es/form/Form";
-import { ContentLayout } from "src/components/content-layout";
-import { HeaderLayout } from "src/components/header-layout";
-import { VerticalLayout } from "src/components/vertical-layout";
+import { Row, Col, Flex } from "antd";
 import { useEventManager } from "src/hooks/useEventManager";
 import { BiodataForm } from "src/partials/biodata-form";
 import { MedicRecordForm } from "src/partials/medic-record-form";
