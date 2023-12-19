@@ -4,6 +4,7 @@ import { IPatient } from "shared/interfaces";
 import dayjs from "dayjs";
 
 const EMPTY_PATIENT : IPatient = {
+	id: 0,
 	nama: "",
 	tanggalLahir: dayjs().format("YYYY-MM-DD"),
 	ktp: "",
@@ -23,6 +24,8 @@ export const useEventManager = () => {
 	const [filteredPatients, setFilteredPatients] = useState<IPatient[]>([]);
 
 	const patientsModel = usePatientsModel();
+
+	const [isBiodataFormLoading, setIsBiodataFormLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		handleSearchPatient("");
@@ -50,16 +53,27 @@ export const useEventManager = () => {
 			.then(patient => setSelectedPatient(patient));
 	}
 
-	const handleSubmitBiodata = () => {
+	const handleSubmitBiodata = async (data: IPatient) => {
+		const id = data.id as number;
 
+		setIsBiodataFormLoading(true);
+		if (id === 0) {
+			const result = await patientsModel.create(data);
+		} else {
+			const result = await patientsModel.update(id, data);
+		}
+
+		setIsBiodataFormLoading(false);
 	}
 
 	return {
 		filteredPatients,
 		selectedPatientId,
 		selectedPatient,
+		isBiodataFormLoading,
 		handleSearchPatient,
 		handleClickAddNewPatient,
 		handleClickPatientCard,
+		handleSubmitBiodata,
 	}
 }

@@ -18,9 +18,11 @@ export const MainPage = () => {
           onClickPatient={em.handleClickPatientCard}/>
       </Col>
       <Col span={12}>
-          <BiodataForm 
-            patient_id={em.selectedPatientId}
+          <BiodataForm
             selected_patient={em.selectedPatient}
+            isLoading={em.isBiodataFormLoading}
+            onSubmit={em.handleSubmitBiodata}
+            onClickRecord={() => console.log("click record")}
              />
       </Col>
       <Col span={7}>

@@ -68,8 +68,10 @@ const recordColumns: ColumnType<IRecord>[] = [
 ]
 
 interface BiodataFormProps {
-	patient_id: number,
 	selected_patient: IPatient,
+	isLoading: boolean,
+	onSubmit: (val: IPatient) => void,
+	onClickRecord: Function,
 }
 
 interface IPatientForm extends IPatient{
@@ -80,22 +82,31 @@ interface IPatientForm extends IPatient{
 export const BiodataForm = (props: BiodataFormProps) => {
 	const [formData] = Form.useForm<IPatientForm>();
 
+	const initialValue = {
+		...props.selected_patient,
+		tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
+		umur: dayjs().diff(props.selected_patient.tanggalLahir, 'year') + " tahun",
+	}
+
 	useEffect(() => {
-		formData.setFieldsValue({
-			...props.selected_patient,
-			tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
-			umur: dayjs().diff(props.selected_patient.tanggalLahir, 'year') + " tahun",
-		});
+		formData.setFieldsValue(initialValue);
 	}, [props.selected_patient]);
 
-	const onFinish = (values: IPatient) => {
-		console.log("Biodata Values:", values)
+	const onFinish = (values: IPatientForm) => {
+		const data : IPatient = {
+			...values,
+			id: props.selected_patient.id,
+			tanggalLahir: values.tanggalLahirObject.format("YYYY-MM-DD"),
+		}
+		props.onSubmit(data);
 	}
 
 	return (
 		<Form name="biodata-form" 
+			disabled={props.isLoading}
 			form={formData}
 			labelWrap={true} 
+			initialValues={initialValue}
 			colon={false} 
 			wrapperCol={{span: 16}} 
 			onFinish={onFinish}>
@@ -136,7 +147,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									<Item name="noPasien" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="umur" label="Umur" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="umur" label="Umur" labelCol={labelConfig}>
 										<Input type='text' readOnly/>
 									</Item>
 									<Item name="alergi" label="Alergi" labelCol={labelConfig}>
@@ -148,7 +159,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 						<Card size='small' >
 							<Row gutter={16}>
 								<Col span={12}>
-									<Item name="ktp" label="No KTP" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="ktp" label="No KTP" labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
 									<Item name="patientTypeId" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
@@ -169,10 +180,10 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="hp" label="No HP" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="hp" label="No HP" labelCol={labelConfig}>
 										<Input type='text' />
 									</Item>
-									<Item name="alamat" label="Alamat" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="alamat" label="Alamat" labelCol={labelConfig}>
 										<TextArea />
 									</Item>
 								</Col>
