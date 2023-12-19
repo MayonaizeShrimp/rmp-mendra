@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { usePatientsModel } from "./usePatientsModel";
 import { IPatient } from "shared/interfaces";
+import dayjs from "dayjs";
 
 const EMPTY_PATIENT : IPatient = {
 	nama: "",
-	tanggalLahir: "",
+	tanggalLahir: dayjs().format("YYYY-MM-DD"),
 	ktp: "",
 	noPasien: "",
 	alamat: "",
@@ -41,7 +42,7 @@ export const useEventManager = () => {
 	};
 
 	const handleClickAddNewPatient = () => {
-		setSelectedPatientId(0);
+		setSelectedPatient(EMPTY_PATIENT);
 	}
 
 	const handleClickPatientCard = (id: number) => {

@@ -123,8 +123,8 @@ export const BiodataForm = (props: BiodataFormProps) => {
 										labelCol={labelConfig}
 										style={{ marginBottom: 0 }}>
 										<Radio.Group>
-											<Radio value={1}> Pria </Radio>
-											<Radio value={0}> Wanita </Radio>
+											<Radio value={true}> Pria </Radio>
+											<Radio value={false}> Wanita </Radio>
 										</Radio.Group>
 									</Item>
 								</Col>
@@ -147,19 +147,19 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									<Item name="ktp" label="No KTP" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="type" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="patientTypeId" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Radio.Group>
 											<div style={{ marginBottom: '8px', marginTop: '6px' }}>
-												<Radio value={"BPJS"}> BPJS </Radio>
+												<Radio value={1}> BPJS </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={"Umum"}> Umum </Radio>
+												<Radio value={2}> Umum </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={"BI Aktif"}> BI Aktif </Radio>
+												<Radio value={3}> BI Aktif </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={"BI Pensiun"}> BI Pensiun </Radio>
+												<Radio value={4}> BI Pensiun </Radio>
 											</div>
 										</Radio.Group>
 									</Item>
@@ -178,7 +178,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							bordered
 							rowKey="id"
 							rowClassName={(_, index) => (index % 2 === 0 ? 'table-row-light' : 'table-row-dark')}
-							// dataSource={props.selected_patient.Records}
+							dataSource={props.selected_patient.Records}
 							columns={recordColumns}
 						/>
 					</Flex>
