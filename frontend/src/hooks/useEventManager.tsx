@@ -58,12 +58,13 @@ export const useEventManager = () => {
 
 		setIsBiodataFormLoading(true);
 		if (id === 0) {
-			const result = await patientsModel.create(data);
+			await patientsModel.create(data);
 		} else {
-			const result = await patientsModel.update(id, data);
+			await patientsModel.update(id, data);
 		}
 
 		setIsBiodataFormLoading(false);
+		patientsModel.getAll();
 	}
 
 	return {
