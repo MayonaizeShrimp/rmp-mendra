@@ -1,8 +1,7 @@
 import { Button, Card, Col, DatePicker, Flex, Form, Input, Radio, Row, Table, Typography } from 'antd';
 import { ColumnType } from 'antd/es/table';
-import { useEffect, useState } from 'react';
-import { IPatient, IRecord, TestData } from 'shared/interfaces';
-import { TestDataModel } from 'src/models/TestData';
+import { useEffect } from 'react';
+import { IPatient, IRecord } from 'shared/interfaces';
 import dayjs, { Dayjs } from 'dayjs';
 import '../style.css';
 import { VerticalLayout } from 'src/components/vertical-layout';
@@ -18,48 +17,53 @@ const recordColumns: ColumnType<IRecord>[] = [
 	{
 		key: "Tanggal",
 		title: "Tanggal",
-		render: (v, r, index) => index,
+		dataIndex: "tanggal",
+		render: d => dayjs(d).format("DD/MM/YY"),
 	},
 	{
-		key: "id",
+		key: "tinggiBadan",
 		title: "TB",
-		dataIndex: "id",
+		dataIndex: "tinggiBadan",
 	},
 	{
-		key: "name",
+		key: "beratBadan",
 		title: "BB",
-		dataIndex: "id",
+		dataIndex: "beratBadan",
 	},
 	{
-		key: "manufacturer",
+		key: "lingkarPerut",
 		title: "LP",
-		dataIndex: "id",
+		dataIndex: "lingkarPerut",
 	},
 	{
-		key: "expiry_date",
+		key: "sistole",
 		title: "TS",
-		dataIndex: "id",
+		dataIndex: "sistole",
 	},
 	{
+		key: "diastole",
 		title: "TD",
-		dataIndex: "id",
+		dataIndex: "diastole",
 	},
 	{
 		title: "Keluhan",
-		dataIndex: "name",
-	},
-	{
-		title: "ICD 10",
-	},
-	{
-		title: "Dx/Primer",
-	},
-	{
-		title: "Terapi",
 		dataIndex: "keluhan",
 	},
 	{
+		title: "ICD 10",
+		dataIndex: "icd10",
+	},
+	{
+		title: "Dx/Primer",
+		dataIndex: "dxPrimer",
+	},
+	{
+		title: "Terapi",
+		dataIndex: "terapi",
+	},
+	{
 		title: "Hasil Lab",
+		dataIndex: "hasilLab",
 	},
 ]
 
@@ -175,6 +179,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							</Row>
 						</Card>
 						<Table
+							size='small'
 							bordered
 							rowKey="id"
 							rowClassName={(_, index) => (index % 2 === 0 ? 'table-row-light' : 'table-row-dark')}
