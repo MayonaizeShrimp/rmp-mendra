@@ -14,7 +14,9 @@ export class Record extends Model<IRecord, RecordCreationAttributes> {
 	declare sistole: number;
 	declare diastole: number;
 	declare keluhan: string;
+	declare icd10: string;
 	declare dxPrimer: string;
+	declare terapi: string;
 	declare hasilLab: string;
 	declare patientId: ForeignKey<Patient['id']>;
 	declare patient?: NonAttribute<Patient>;
@@ -23,7 +25,7 @@ export class Record extends Model<IRecord, RecordCreationAttributes> {
 Record.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.BIGINT,
 			autoIncrement: true,
 			primaryKey: true,
 		},
@@ -34,7 +36,9 @@ Record.init(
 		sistole: DataTypes.INTEGER,
 		diastole: DataTypes.INTEGER,
 		keluhan: DataTypes.STRING,
+		icd10: DataTypes.STRING,
 		dxPrimer: DataTypes.STRING,
+		terapi: DataTypes.STRING,
 		hasilLab: DataTypes.STRING,
 		patientId: {
 			type: DataTypes.INTEGER,

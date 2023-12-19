@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       tanggal: {
         type: Sequelize.DATE,
@@ -31,7 +31,13 @@ module.exports = {
       keluhan: {
         type: Sequelize.STRING
       },
+      icd10: {
+        type: Sequelize.STRING
+      },
       dxPrimer: {
+        type: Sequelize.STRING
+      },
+      terapi: {
         type: Sequelize.STRING
       },
       hasilLab: {

@@ -27,7 +27,9 @@ module.exports = {
           sistole: sample,
           diastole: sample,
           keluhan: "sample keluhan nomor " + entry,
+          icd10: "sample icd 10 nomor " + entry,
           dxPrimer: "sample dxPrimer nomor " + entry,
+          terapi: "sample terapi nomor " + entry,
           hasilLab: "sample hasilLab nomor " + entry,
           patientId: patient_id,
         }

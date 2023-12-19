@@ -34,7 +34,9 @@ export interface IRecord {
 	sistole: number,
 	diastole: number,
 	keluhan: string,
+	icd10: string,
 	dxPrimer: string,
+	terapi: string,
 	hasilLab: string,
 	patientId: number,
 }
