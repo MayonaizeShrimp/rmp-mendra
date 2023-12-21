@@ -1,4 +1,5 @@
 import { Row, Col, Flex } from "antd";
+import { IRecord } from "shared/interfaces";
 import { useEventManager } from "src/hooks/useEventManager";
 import { BiodataForm } from "src/partials/biodata-form";
 import { MedicRecordForm } from "src/partials/medic-record-form";
@@ -22,12 +23,17 @@ export const MainPage = () => {
             selected_patient={em.selectedPatient}
             isLoading={em.isBiodataFormLoading}
             onSubmit={em.handleSubmitBiodata}
-            onClickRecord={() => console.log("click record")}
+            onClickNewRecord={em.handleClickAddNewRecord}
+            onClickRecord={em.handleClickMedRecord}
              />
       </Col>
       <Col span={7}>
         <Flex vertical gap={16} style={{ height: "95vh" }}>
-            <MedicRecordForm />
+            <MedicRecordForm 
+              selectedRecord={em.selectedRecord} 
+              isLoading={false} 
+              onSubmit={() => {}} 
+              onCancel={() => {}} />
         </Flex>
       </Col>
     </Row>

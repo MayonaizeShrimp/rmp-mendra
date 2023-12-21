@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePatientsModel } from "./usePatientsModel";
-import { IPatient } from "shared/interfaces";
+import { IPatient, IRecord } from "shared/interfaces";
 import dayjs from "dayjs";
 
 const EMPTY_PATIENT : IPatient = {
@@ -17,15 +17,32 @@ const EMPTY_PATIENT : IPatient = {
 	Records: [],
 }
 
+const EMPTY_RECORD : IRecord = {
+	tanggal: dayjs().format("YYYY-MM-DD"),
+	tinggiBadan: 0,
+	beratBadan: 0,
+	lingkarPerut: 0,
+	sistole: 0,
+	diastole: 0,
+	keluhan: "",
+	icd10: "",
+	dxPrimer: "",
+	terapi: "",
+	hasilLab: "",
+	patientId: 0
+}
+
 export const useEventManager = () => {
-	const [selectedPatientId, setSelectedPatientId] = useState<number>(0);
-	const [selectedPatient, setSelectedPatient] = useState<IPatient>(EMPTY_PATIENT);
-
+	//list of patients to show
 	const [filteredPatients, setFilteredPatients] = useState<IPatient[]>([]);
-
-	const patientsModel = usePatientsModel();
-
+	//user selected states
+	const [selectedPatient, setSelectedPatient] = useState<IPatient>(EMPTY_PATIENT);
+	const [selectedRecord, setSelectedRecord] = useState<IRecord>(EMPTY_RECORD);
+	//disable form when loading
 	const [isBiodataFormLoading, setIsBiodataFormLoading] = useState<boolean>(false);
+
+	//model hooks
+	const patientsModel = usePatientsModel();
 
 	useEffect(() => {
 		handleSearchPatient("");
@@ -46,11 +63,13 @@ export const useEventManager = () => {
 
 	const handleClickAddNewPatient = () => {
 		setSelectedPatient(EMPTY_PATIENT);
+		setSelectedRecord(EMPTY_RECORD);
 	}
 
 	const handleClickPatientCard = (id: number) => {
 		patientsModel.getById(id)
 			.then(patient => setSelectedPatient(patient));
+		setSelectedRecord(EMPTY_RECORD);
 	}
 
 	const handleSubmitBiodata = async (data: IPatient) => {
@@ -67,14 +86,27 @@ export const useEventManager = () => {
 		patientsModel.getAll();
 	}
 
+	const handleClickAddNewRecord = () => {
+		setSelectedRecord({
+			...EMPTY_RECORD,
+			patientId: selectedPatient.id ? selectedPatient.id : 0,
+		})
+	}
+
+	const handleClickMedRecord = (rowData: IRecord) => {
+		setSelectedRecord(rowData);
+	}
+
 	return {
 		filteredPatients,
-		selectedPatientId,
+		selectedRecord,
 		selectedPatient,
 		isBiodataFormLoading,
 		handleSearchPatient,
 		handleClickAddNewPatient,
 		handleClickPatientCard,
 		handleSubmitBiodata,
+		handleClickAddNewRecord,
+		handleClickMedRecord,
 	}
 }

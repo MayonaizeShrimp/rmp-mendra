@@ -71,6 +71,7 @@ interface BiodataFormProps {
 	selected_patient: IPatient,
 	isLoading: boolean,
 	onSubmit: (val: IPatient) => void,
+	onClickNewRecord: Function,
 	onClickRecord: Function,
 }
 
@@ -190,7 +191,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							</Row>
 						</Card>
 						<Flex>
-							<Button type="primary">Tambah Kunjungan</Button>
+							<Button type="primary" onClick={() => props.onClickNewRecord()}>Tambah Kunjungan</Button>
 						</Flex>
 						<Table
 							size='small'
@@ -199,6 +200,11 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							rowClassName={(_, index) => (index % 2 === 0 ? 'table-row-light' : 'table-row-dark')}
 							dataSource={props.selected_patient.Records}
 							columns={recordColumns}
+							onRow={(rec) => {
+								return {
+									onClick: e => props.onClickRecord(rec),
+								} 
+							}}
 						/>
 					</Flex>
 				</ContentLayout>
