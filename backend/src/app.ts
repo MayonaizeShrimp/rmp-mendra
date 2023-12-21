@@ -3,6 +3,7 @@ import path from "path";
 import cors from 'cors';
 import patientsRouter from "./controllers/patients";
 import { connectToDB } from "./models";
+import recordsRouter from "./controllers/records";
 
 const app = express();
 const port = 5000;
@@ -15,6 +16,7 @@ app.use(cors(options));
 
 //use implement routers
 app.use('/api/patients', patientsRouter);
+app.use('/api/records', recordsRouter);
 
 //serve built frontend result from `npm run build:frontend`
 app.use(express.static(path.join(__dirname, '../../frontend/build')));
