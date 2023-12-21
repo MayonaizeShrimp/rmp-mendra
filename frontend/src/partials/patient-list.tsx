@@ -1,82 +1,64 @@
 import { UserAddOutlined } from "@ant-design/icons"
-import { Flex, Input, Button } from "antd"
-import PatientCard from "./patient-card"
-import { useState } from "react";
+import { Flex, Input, Button, Card } from "antd"
+import { IPatient } from "shared/interfaces";
+import dayjs from "dayjs";
+import { ContentLayout } from "src/components/content-layout";
+import { HeaderLayout } from "src/components/header-layout";
+import { VerticalLayout } from "src/components/vertical-layout";
 
-const DUMMY_PATIENT = [
-	{ name: "Budi Budi Budi Budi", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Dimas", dob: "asdf", uuid: "asdfsadf" },
-	{
-	  name: "Charlie Charlie Charlie Charlie Charlie Charlie",
-	  dob: "asdf",
-	  uuid: "asdfsadf",
-	},
-	{ name: "Emil", dob: "2023-08-08", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-	{ name: "Emil Uwu", dob: "asdf", uuid: "asdfsadf" },
-  ];
-  
+const { Meta } = Card;
 
-export const PatientList = () => {
-	const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState(DUMMY_PATIENT);
+interface PatientCardProps {
+  id: number;
+  name: string;
+  dob: string;
+  uuid: string;
+  onClick: Function;
+}
 
-  const handleSearchInputChange = (event: string) => {
-    setSearchQuery(event);
-    filterPatients(event); // comment this line to test search bar onSearch function only
-  };
+interface PatientListProps {
+  patients: IPatient[],
+  onSearchPatient: Function,
+  onClickAddPatient: Function,
+  onClickPatient: Function,
+}
 
-  const filterPatients = (query: string) => {
-    const filteredPatients = DUMMY_PATIENT.filter((patient) => {
-      const nameMatches = patient.name
-        .toLowerCase()
-        .includes(query.toLowerCase());
-      const uuidMatches = patient.uuid
-        .toLowerCase()
-        .includes(query.toLowerCase());
-      return nameMatches || uuidMatches;
-    });
-    setFilteredPatients(filteredPatients);
-  };
+const PatientCard = (props: PatientCardProps) => (
+  <Card hoverable bodyStyle={{ padding: 12 }} onClick={() => props.onClick()}>
+    <Meta title={`${props.name}`} />
+    <Flex justify="space-between">
+      <p style={{marginBottom: 0}}>{props.uuid}</p>
+      <p style={{marginBottom: 0}}>{dayjs(props.dob).format("D MMM YYYY")}</p>
+    </Flex>
+  </Card>
+);
 
-  const handleSearch = () => {
-    filterPatients(searchQuery);
-  };
-
-	return <Flex vertical gap={16} style={{ height: "95vh" }}>
-          <Flex gap={8}>
-            <Input.Search
-              onChange={(event) => handleSearchInputChange(event.target.value)}
-              onSearch={handleSearch}
-              value={searchQuery}
-              type="text"
-              placeholder="Cari Pasien"
-              size="large"
-              allowClear
-            />
-            <Button type="primary" size="large">
-              <UserAddOutlined />
-            </Button>
-          </Flex>
-          <Flex className="scrollToHeight" gap={8} vertical>
-            {filteredPatients.map((patient, index) => (
-              <PatientCard
-                key={index}
-                name={patient.name}
-                dob={patient.dob}
-                uuid={patient.uuid}
-              />
-            ))}
-          </Flex>
-        </Flex>
+export const PatientList = (props : PatientListProps) => {
+  return <VerticalLayout>
+    <HeaderLayout>
+      <Input.Search
+        onChange={(event) => props.onSearchPatient(event.target.value)}
+        onSearch={(val) => props.onSearchPatient(val)}
+        type="text"
+        placeholder="Cari Pasien"
+        size="large"
+        allowClear
+      />
+      <Button type="primary" size="large" onClick={() => props.onClickAddPatient()}>
+        <UserAddOutlined />
+      </Button>
+    </HeaderLayout>
+    <ContentLayout>
+      {props.patients.map((patient, index) => (
+        <PatientCard
+          key={patient.id}
+          id={patient.id as number}
+          name={patient.nama}
+          dob={patient.tanggalLahir}
+          uuid={patient.noPasien}
+          onClick={() => props.onClickPatient(patient.id)}
+        />
+      ))}
+    </ContentLayout>
+  </VerticalLayout>
 }

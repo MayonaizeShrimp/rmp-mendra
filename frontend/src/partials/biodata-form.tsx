@@ -1,122 +1,136 @@
 import { Button, Card, Col, DatePicker, Flex, Form, Input, Radio, Row, Table, Typography } from 'antd';
 import { ColumnType } from 'antd/es/table';
-import { useEffect, useState } from 'react';
-import { TestData } from 'shared/interfaces';
-import { TestDataModel } from 'src/models/TestData';
-import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import { IPatient, IRecord } from 'shared/interfaces';
+import dayjs, { Dayjs } from 'dayjs';
 import '../style.css';
+import { VerticalLayout } from 'src/components/vertical-layout';
+import { HeaderLayout } from 'src/components/header-layout';
+import { ContentLayout } from 'src/components/content-layout';
 
 const { Item } = Form;
 const { TextArea } = Input;
 
 const labelConfig = { span: 6 };
 
-const recordColumns: ColumnType<TestData>[] = [
+const recordColumns: ColumnType<IRecord>[] = [
 	{
 		key: "Tanggal",
 		title: "Tanggal",
-		render: (v, r, index) => index,
+		dataIndex: "tanggal",
+		render: d => dayjs(d).format("DD/MM/YY"),
 	},
 	{
-		key: "id",
+		key: "tinggiBadan",
 		title: "TB",
-		dataIndex: "id",
+		dataIndex: "tinggiBadan",
 	},
 	{
-		key: "name",
+		key: "beratBadan",
 		title: "BB",
-		dataIndex: "id",
+		dataIndex: "beratBadan",
 	},
 	{
-		key: "manufacturer",
+		key: "lingkarPerut",
 		title: "LP",
-		dataIndex: "id",
+		dataIndex: "lingkarPerut",
 	},
 	{
-		key: "expiry_date",
+		key: "sistole",
 		title: "TS",
-		dataIndex: "id",
+		dataIndex: "sistole",
 	},
 	{
+		key: "diastole",
 		title: "TD",
-		dataIndex: "id",
+		dataIndex: "diastole",
 	},
 	{
 		title: "Keluhan",
-		dataIndex: "name",
+		dataIndex: "keluhan",
 	},
 	{
 		title: "ICD 10",
+		dataIndex: "icd10",
 	},
 	{
 		title: "Dx/Primer",
+		dataIndex: "dxPrimer",
 	},
 	{
 		title: "Terapi",
-		dataIndex: "manufacturer",
+		dataIndex: "terapi",
 	},
 	{
 		title: "Hasil Lab",
+		dataIndex: "hasilLab",
 	},
 ]
 
 interface BiodataFormProps {
-	patient_id: number,
+	selected_patient: IPatient,
+	isLoading: boolean,
+	onSubmit: (val: IPatient) => void,
+	onClickNewRecord: Function,
+	onClickRecord: Function,
 }
 
-interface BiodataValues {
-	nama: string,
-	tanggalLahir: dayjs.Dayjs,
-	gender: string,
-	uuid: string,
+interface IPatientForm extends IPatient{
+	tanggalLahirObject: Dayjs,
 	umur: string,
-	allergies: string,
-	ktp: string,
-	type: string,
-	phone: string,
-	address: string,
 }
 
 export const BiodataForm = (props: BiodataFormProps) => {
-	const [testData, setTestData] = useState<TestData[]>([]);
+	const [formData] = Form.useForm<IPatientForm>();
+
+	const initialValue = {
+		...props.selected_patient,
+		tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
+		umur: dayjs().diff(props.selected_patient.tanggalLahir, 'year') + " tahun",
+	}
 
 	useEffect(() => {
-		TestDataModel.get()
-			.then(res => {
-				console.log(`${res.length} test data is fetched from backend`);
-				setTestData(res);
-			})
-			.catch(err => {
-				console.error(`error when fetching from test backend`, err);
-			})
-	}, []);
+		formData.setFieldsValue(initialValue);
+	}, [props.selected_patient]);
 
-	const onFinish = (values: BiodataValues) => {
-		console.log("Biodata Values:", values)
+	const onFinish = (values: IPatientForm) => {
+		const data : IPatient = {
+			...values,
+			id: props.selected_patient.id,
+			tanggalLahir: values.tanggalLahirObject.format("YYYY-MM-DD"),
+		}
+		props.onSubmit(data);
 	}
 
 	return (
-		<Form name="biodata-form" labelWrap={true} colon={false} wrapperCol={{span: 16}} onFinish={onFinish}>
-			<Flex vertical gap={16} style={{ height: "95vh" }}>
-				<Flex justify="space-between">
+		<Form name="biodata-form" 
+			disabled={props.isLoading}
+			form={formData}
+			labelWrap={true} 
+			initialValues={initialValue}
+			colon={false} 
+			wrapperCol={{span: 16}} 
+			onFinish={onFinish}>
+			<VerticalLayout>
+				<HeaderLayout>
 					<Typography.Title level={2} style={{ margin: 0 }}>
-					Biodata Pasien
+						Biodata Pasien
 					</Typography.Title>
 					<Flex justify="end" gap={8}>
-						<Button size="large" type="primary" htmlType='submit'>Save</Button>
+						<Button size="large" type="primary" htmlType='submit'>Simpan</Button>
 						<Button size="large" htmlType='reset'>Reset</Button>
 					</Flex>
-				</Flex>
-				<Flex className='scrollToHeight' vertical>
+				</HeaderLayout>
+				<ContentLayout>
 					<Flex vertical gap={16}>
 						<Card size='small'>	
 							<Row gutter={16}>
 								<Col span={12}>
-									<Item name="name" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="nama" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="tanggalLahir" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
-										<DatePicker value={dayjs()} format="DD MMMM YYYY" />
+									<Item name="tanggalLahirObject" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
+										<DatePicker format="DD MMMM YYYY" />
 									</Item>
 									<Item
 										name="gender"
@@ -124,20 +138,20 @@ export const BiodataForm = (props: BiodataFormProps) => {
 										rules={[{ required: true }]}
 										labelCol={labelConfig}
 										style={{ marginBottom: 0 }}>
-										<Radio.Group style={{}}>
-											<Radio value={"Pria"}> Pria </Radio>
-											<Radio value={"Wanita"}> Wanita </Radio>
+										<Radio.Group>
+											<Radio value={true}> Pria </Radio>
+											<Radio value={false}> Wanita </Radio>
 										</Radio.Group>
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="uuid" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="noPasien" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="umur" label="Umur" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Input type='text'/>
+									<Item name="umur" label="Umur" labelCol={labelConfig}>
+										<Input type='text' readOnly/>
 									</Item>
-									<Item name="allergies" label="Alergi" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="alergi" label="Alergi" labelCol={labelConfig}>
 										<TextArea />
 									</Item>
 								</Col>
@@ -146,46 +160,55 @@ export const BiodataForm = (props: BiodataFormProps) => {
 						<Card size='small' >
 							<Row gutter={16}>
 								<Col span={12}>
-									<Item name="ktp" label="No KTP" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="ktp" label="No KTP" labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="type" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="patientTypeId" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
 										<Radio.Group>
 											<div style={{ marginBottom: '8px', marginTop: '6px' }}>
-												<Radio value={"BPJS"}> BPJS </Radio>
+												<Radio value={1}> BPJS </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={"Umum"}> Umum </Radio>
+												<Radio value={2}> Umum </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={"BI Aktif"}> BI Aktif </Radio>
+												<Radio value={3}> BI Aktif </Radio>
 											</div>
 											<div style={{ marginBottom: '8px' }}>
-												<Radio value={"BI Pensiun"}> BI Pensiun </Radio>
+												<Radio value={4}> BI Pensiun </Radio>
 											</div>
 										</Radio.Group>
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="phone" label="No HP" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="hp" label="No HP" labelCol={labelConfig}>
 										<Input type='text' />
 									</Item>
-									<Item name="address" label="Alamat" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="alamat" label="Alamat" labelCol={labelConfig}>
 										<TextArea />
 									</Item>
 								</Col>
 							</Row>
 						</Card>
+						<Flex>
+							<Button type="primary" onClick={() => props.onClickNewRecord()}>Tambah Kunjungan</Button>
+						</Flex>
 						<Table
+							size='small'
 							bordered
 							rowKey="id"
 							rowClassName={(_, index) => (index % 2 === 0 ? 'table-row-light' : 'table-row-dark')}
-							dataSource={testData}
+							dataSource={props.selected_patient.Records}
 							columns={recordColumns}
+							onRow={(rec) => {
+								return {
+									onClick: e => props.onClickRecord(rec),
+								} 
+							}}
 						/>
 					</Flex>
-				</Flex>
-        	</Flex>
+				</ContentLayout>
+			</VerticalLayout>
 		</Form>
 	)
 }

@@ -32,7 +32,10 @@ Patient.init(
 		},
 		tanggalLahir: DataTypes.DATE,
 		ktp: DataTypes.STRING,
-		noPasien: DataTypes.STRING,
+		noPasien: {
+			type: DataTypes.STRING,
+			unique: true,
+		},
 		alamat: DataTypes.STRING,
 		alergi: DataTypes.STRING,
 		hp: DataTypes.STRING,

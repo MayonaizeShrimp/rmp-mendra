@@ -19,6 +19,16 @@ module.exports = {
       "Charlie",
       "Charlie lagi tapi namanya super panjang banget ya oloh ini ga berhenti",
       "Daniel",
+      "Edgar",
+      "Fabio",
+      "Gerald",
+      "Hudson",
+      "Ignatius",
+      "Jonathan",
+      "Kelvin",
+      "Loius",
+      "Mario",
+      "Noah",
     ]
 
     const dummy = names.map((name, i) => ({

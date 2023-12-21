@@ -14,11 +14,11 @@ module.exports = {
         validate: {
           notEmpty: {
             args: true,
-            msg: "Name must not empty"
+            msg: "nama tidak boleh kosong"
           },
           notNull: {
             args: true,
-            msg: "Name must not empty"
+            msg: "nama tidak boleh kosong"
           }
         }
       },
@@ -27,11 +27,11 @@ module.exports = {
         validate: {
           notEmpty: {
             args: true,
-            msg: "Tanggal Lahir must not empty"
+            msg: "tanggal lahir tidak boleh kosong"
           },
           notNull: {
             args: true,
-            msg: "Tanggal Lahir must not empty"
+            msg: "tanggal lahir tidak boleh kosong"
           }
         }
       },
@@ -39,7 +39,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       noPasien: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
       },
       alamat: {
         type: Sequelize.STRING
