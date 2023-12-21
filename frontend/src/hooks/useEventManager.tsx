@@ -129,6 +129,14 @@ export const useEventManager = () => {
 		setInputMode("patient");
 	}
 
+	const handleCheckNoPasienUnique = (val: string) : boolean => {
+		for (const p of patientsModel.patients) {
+			if (p.noPasien.toLowerCase() === val.toLowerCase()) return false;
+		}
+
+		return true;
+	}
+
 	return {
 		inputMode,
 		filteredPatients,
@@ -143,5 +151,6 @@ export const useEventManager = () => {
 		handleClickMedRecord,
 		handleSubmitRecord,
 		handleCloseRecord,
+		handleCheckNoPasienUnique,
 	}
 }

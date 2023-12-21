@@ -73,6 +73,7 @@ interface BiodataFormProps {
 	onSubmit: (val: IPatient) => void,
 	onClickNewRecord: Function,
 	onClickRecord: Function,
+	handleCheckNoPasienUnique: (val: string) => boolean,
 }
 
 interface IPatientForm extends IPatient{
@@ -113,6 +114,16 @@ export const BiodataForm = (props: BiodataFormProps) => {
 
 	const handleClickNewRecords = () => {
 		if (isPatientIdValid) props.onClickNewRecord();
+	}
+
+	const handleValidateUniqueNoPasien = (val: string) : boolean => {
+		//if update data
+		if (isPatientIdValid) {
+			return val === props.selected_patient.noPasien || props.handleCheckNoPasienUnique(val);
+		}
+
+		//if insert data
+		return props.handleCheckNoPasienUnique(val);
 	}
 
 	return (
@@ -165,7 +176,18 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="noPasien" label="No Pasien" rules={[{ required: true, message: "Nomor pasien tidak boleh kosong" }]} labelCol={labelConfig}>
+									<Item 
+										name="noPasien" 
+										label="No Pasien" 
+										rules={[
+											{ required: true, message: "Nomor pasien tidak boleh kosong" }, 
+											{ 
+												validator: (_, val) => handleValidateUniqueNoPasien(val) 
+													? Promise.resolve() 
+													: Promise.reject("Nomor pasien harus unik")
+											},
+										]} 
+										labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
 									<Item name="umur" label="Umur" labelCol={labelConfig}>

@@ -24,7 +24,8 @@ export const MainPage = () => {
           onSubmit={em.handleSubmitBiodata}
           onClickNewRecord={em.handleClickAddNewRecord}
           onClickRecord={em.handleClickMedRecord}
-            />
+          handleCheckNoPasienUnique={em.handleCheckNoPasienUnique}
+          />
       </Col>
       <Col span={em.inputMode === "record" ? 7 : 0}>
         <Flex vertical gap={16} style={{ height: "95vh" }}>
