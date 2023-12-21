@@ -80,10 +80,10 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
       onFinish={handleFormFinish}>
       <Modal
 				open={isModalOpen}
-				title={isRecordValid ? "Edit Data" : "Data Baru"}
+				title={isRecordValid ? "Edit Kunjungan" : "Kunjungan Baru"}
 				onOk={() => handleSubmitData()}
 				onCancel={() => setIsModalOpen(false)}>
-				<p>{isRecordValid ? "Apakah Anda yakin ingin ubah data?" : "Apakah Anda yakin ingin simpan data baru?"}</p>
+				<p>{isRecordValid ? "Apakah Anda yakin ingin ubah data kunjungan?" : "Apakah Anda yakin ingin simpan data kunjungan baru?"}</p>
 			</Modal>
       <Flex vertical gap={16} style={{ maxHeight: "95vh" }}>
         <Flex justify="space-between">
