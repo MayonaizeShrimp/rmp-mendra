@@ -116,7 +116,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 						Biodata Pasien
 					</Typography.Title>
 					<Flex justify="end" gap={8}>
-						<Button size="large" type="primary" htmlType='submit'>Save</Button>
+						<Button size="large" type="primary" htmlType='submit'>Simpan</Button>
 						<Button size="large" htmlType='reset'>Reset</Button>
 					</Flex>
 				</HeaderLayout>
@@ -189,6 +189,9 @@ export const BiodataForm = (props: BiodataFormProps) => {
 								</Col>
 							</Row>
 						</Card>
+						<Flex>
+							<Button type="primary">Tambah Kunjungan</Button>
+						</Flex>
 						<Table
 							size='small'
 							bordered

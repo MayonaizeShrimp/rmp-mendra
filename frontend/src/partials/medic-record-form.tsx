@@ -44,7 +44,7 @@ export const MedicRecordForm = () => {
         <Flex justify="space-between">
           <Typography.Title level={2} style={{ margin: 0 }}>Kunjungan</Typography.Title>
           <Flex justify="end" gap={8}>
-            <Button size="large" type="primary" htmlType="submit">Save</Button>
+            <Button size="large" type="primary" htmlType="submit">Simpan</Button>
             <Button size="large" htmlType="reset">Reset</Button>
             <Button size="large" type="text"><CloseOutlined /></Button>
           </Flex>
