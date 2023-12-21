@@ -1,6 +1,6 @@
-import { Button, Card, Col, DatePicker, Flex, Form, Input, Radio, Row, Table, Typography } from 'antd';
+import { Button, Card, Col, DatePicker, Flex, Form, Input, Modal, Radio, Row, Table, Typography } from 'antd';
 import { ColumnType } from 'antd/es/table';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { IPatient, IRecord } from 'shared/interfaces';
 import dayjs, { Dayjs } from 'dayjs';
 import '../style.css';
@@ -81,8 +81,11 @@ interface IPatientForm extends IPatient{
 }
 
 export const BiodataForm = (props: BiodataFormProps) => {
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
 	const [formData] = Form.useForm<IPatientForm>();
 
+	const isPatientIdValid = props.selected_patient.id;
 	const initialValue = {
 		...props.selected_patient,
 		tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
@@ -93,24 +96,41 @@ export const BiodataForm = (props: BiodataFormProps) => {
 		formData.setFieldsValue(initialValue);
 	}, [props.selected_patient]);
 
-	const onFinish = (values: IPatientForm) => {
+	const handleFormFinish = (values: IPatientForm) => {
+		setIsModalOpen(true);
+	}
+
+	const handleSubmitData = () => {
+		const values = formData.getFieldsValue();
 		const data : IPatient = {
 			...values,
 			id: props.selected_patient.id,
 			tanggalLahir: values.tanggalLahirObject.format("YYYY-MM-DD"),
 		}
+		setIsModalOpen(false);
 		props.onSubmit(data);
+	}
+
+	const handleClickNewRecords = () => {
+		if (isPatientIdValid) props.onClickNewRecord();
 	}
 
 	return (
 		<Form name="biodata-form" 
-			disabled={props.isLoading}
 			form={formData}
 			labelWrap={true} 
+			disabled={props.isLoading}
 			initialValues={initialValue}
 			colon={false} 
 			wrapperCol={{span: 16}} 
-			onFinish={onFinish}>
+			onFinish={handleFormFinish}>
+			<Modal
+				open={isModalOpen}
+				title={isPatientIdValid ? "Edit Pasien" : "Pasien Baru"}
+				onOk={() => handleSubmitData()}
+				onCancel={() => setIsModalOpen(false)}>
+				<p>{isPatientIdValid ? "Apakah Anda yakin ingin ubah data pasien?" : "Apakah Anda yakin ingin simpan pasien baru?"}</p>
+			</Modal>
 			<VerticalLayout>
 				<HeaderLayout>
 					<Typography.Title level={2} style={{ margin: 0 }}>
@@ -126,7 +146,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 						<Card size='small'>	
 							<Row gutter={16}>
 								<Col span={12}>
-									<Item name="nama" label="Nama" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="nama" label="Nama" rules={[{ required: true, message: "Nama pasien tidak boleh kosong" }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
 									<Item name="tanggalLahirObject" label="Tanggal Lahir" rules={[{ required: true }]} labelCol={labelConfig}>
@@ -145,7 +165,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									</Item>
 								</Col>
 								<Col span={12}>
-									<Item name="noPasien" label="No Pasien" rules={[{ required: true }]} labelCol={labelConfig}>
+									<Item name="noPasien" label="No Pasien" rules={[{ required: true, message: "Nomor pasien tidak boleh kosong" }]} labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
 									<Item name="umur" label="Umur" labelCol={labelConfig}>
@@ -191,7 +211,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 							</Row>
 						</Card>
 						<Flex>
-							<Button type="primary" onClick={() => props.onClickNewRecord()}>Tambah Kunjungan</Button>
+							<Button type="primary" disabled={isPatientIdValid ? false : true} onClick={handleClickNewRecords}>Tambah Kunjungan</Button>
 						</Flex>
 						<Table
 							size='small'
