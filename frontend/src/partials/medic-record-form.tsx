@@ -68,7 +68,7 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
           <Flex justify="end" gap={8}>
             <Button size="large" type="primary" htmlType="submit">Simpan</Button>
             <Button size="large" htmlType="reset">Reset</Button>
-            <Button size="large" type="text"><CloseOutlined /></Button>
+            <Button size="large" type="text" onClick={() => props.onCancel()}><CloseOutlined /></Button>
           </Flex>
         </Flex>
           <Card className="scrollToHeight">

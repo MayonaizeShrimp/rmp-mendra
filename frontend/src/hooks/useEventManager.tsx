@@ -33,6 +33,8 @@ const EMPTY_RECORD : IRecord = {
 	patientId: 0
 }
 
+export type InputMode = "patient" | "record" ;
+
 export const useEventManager = () => {
 	//list of patients to show
 	const [filteredPatients, setFilteredPatients] = useState<IPatient[]>([]);
@@ -41,6 +43,8 @@ export const useEventManager = () => {
 	const [selectedRecord, setSelectedRecord] = useState<IRecord>(EMPTY_RECORD);
 	//disable form when loading
 	const [isBiodataFormLoading, setIsBiodataFormLoading] = useState<boolean>(false);
+	//input mode patient or records
+	const [inputMode, setInputMode] = useState<InputMode>("patient");
 
 	//model hooks
 	const patientsModel = usePatientsModel();
@@ -93,10 +97,12 @@ export const useEventManager = () => {
 			...EMPTY_RECORD,
 			patientId: selectedPatient.id ? selectedPatient.id : 0,
 		})
+		setInputMode("record");
 	}
 
 	const handleClickMedRecord = (rowData: IRecord) => {
 		setSelectedRecord(rowData);
+		setInputMode("record");
 	}
 
 	const handleSubmitRecord = async (data: IRecord) => {
@@ -107,10 +113,6 @@ export const useEventManager = () => {
 
 		const id = data.id;
 
-		console.log("payload is ", data);
-
-		console.log(id, id === 0, id === undefined);
-
 		setIsBiodataFormLoading(true);
 		if (id === 0 || id === undefined) {
 			await recordsModel.create(data);
@@ -120,9 +122,15 @@ export const useEventManager = () => {
 
 		setIsBiodataFormLoading(false);
 		handleClickPatientCard(selectedPatient.id as number);
+		setInputMode("patient");
+	}
+
+	const handleCloseRecord = () => {
+		setInputMode("patient");
 	}
 
 	return {
+		inputMode,
 		filteredPatients,
 		selectedRecord,
 		selectedPatient,
@@ -134,5 +142,6 @@ export const useEventManager = () => {
 		handleClickAddNewRecord,
 		handleClickMedRecord,
 		handleSubmitRecord,
+		handleCloseRecord,
 	}
 }
