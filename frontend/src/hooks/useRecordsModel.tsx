@@ -7,8 +7,7 @@ export const useRecordsModel = () => {
 		
 		return Records.create(data)
 			.then(res => {
-				console.log(res);
-				// message.success(`Record ${data.} berhasil ditambahkan`)
+				message.success(`Kunjungan berhasil ditambahkan`);
 			})
 			.catch(err => {
 				if (err.message) {
@@ -24,8 +23,7 @@ export const useRecordsModel = () => {
 	const update = async (id: number, data: IRecord) => {
 		return Records.update(id, data)
 			.then(res => {
-				console.log(res);
-				// message.success(`Record ${data.} berhasil diupdate`)
+				message.success(`Kunjungan berhasil diupdate`);
 			})
 			.catch(err => {
 				if (err.message) {

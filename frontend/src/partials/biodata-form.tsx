@@ -107,6 +107,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 			id: props.selected_patient.id,
 			tanggalLahir: values.tanggalLahirObject.format("YYYY-MM-DD"),
 		}
+		setIsModalOpen(false);
 		props.onSubmit(data);
 	}
 

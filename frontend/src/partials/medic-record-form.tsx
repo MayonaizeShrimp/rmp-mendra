@@ -9,11 +9,13 @@ import {
   Row,
   Button,
   Typography,
+  Modal,
+  message,
 } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import dayjs, { extend } from "dayjs";
+import dayjs from "dayjs";
 import { IRecord } from "shared/interfaces";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -32,8 +34,11 @@ interface MedicRecordFormProps {
 }
 
 export const MedicRecordForm = (props: MedicRecordFormProps) => {
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData] = Form.useForm<IRecordForm>();
 
+  const isPatientIdValid = props.selectedRecord.patientId;
+	const isRecordValid = props.selectedRecord.id;
 	const initialValue = {
 		...props.selectedRecord,
 		tanggalObject: dayjs(props.selectedRecord.tanggal),
@@ -43,25 +48,43 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
 		formData.setFieldsValue(initialValue);
 	}, [props.selectedRecord]);
 
-	const onFinish = (values: IRecordForm) => {
-    if (!props.selectedRecord.patientId || props.selectedRecord.patientId === 0) return;
+	const handleFormFinish = (values: IRecordForm) => {
+    setIsModalOpen(true);
+	}
 
+  const handleSubmitData = () => {
+    if (!props.selectedRecord.patientId || props.selectedRecord.patientId === 0) {
+      message.error("Patient ID is not valid");
+      return;
+    };
+
+    const values = formData.getFieldsValue();
 		const data : IRecord = {
 			...values,
 			id: props.selectedRecord.id,
       patientId: props.selectedRecord.patientId,
 			tanggal: values.tanggalObject.format("YYYY-MM-DD"),
 		}
+    setIsModalOpen(false);
 		props.onSubmit(data);
-	}
+  }
 
   return (
     <Form 
       form={formData} 
+      disabled={props.isLoading}
 			initialValues={initialValue}
-      labelWrap labelAlign="left" 
+      labelWrap={true}
+      labelAlign="left" 
       colon={false} 
-      onFinish={onFinish}>
+      onFinish={handleFormFinish}>
+      <Modal
+				open={isModalOpen}
+				title={isRecordValid ? "Edit Data" : "Data Baru"}
+				onOk={() => handleSubmitData()}
+				onCancel={() => setIsModalOpen(false)}>
+				<p>{isRecordValid ? "Apakah Anda yakin ingin ubah data?" : "Apakah Anda yakin ingin simpan data baru?"}</p>
+			</Modal>
       <Flex vertical gap={16} style={{ maxHeight: "95vh" }}>
         <Flex justify="space-between">
           <Typography.Title level={2} style={{ margin: 0 }}>Kunjungan</Typography.Title>
