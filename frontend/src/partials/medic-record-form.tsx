@@ -40,14 +40,16 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
 	}
 
 	useEffect(() => {
-    console.log(props.selectedRecord)
 		formData.setFieldsValue(initialValue);
 	}, [props.selectedRecord]);
 
 	const onFinish = (values: IRecordForm) => {
+    if (!props.selectedRecord.patientId || props.selectedRecord.patientId === 0) return;
+
 		const data : IRecord = {
 			...values,
 			id: props.selectedRecord.id,
+      patientId: props.selectedRecord.patientId,
 			tanggal: values.tanggalObject.format("YYYY-MM-DD"),
 		}
 		props.onSubmit(data);
@@ -85,27 +87,27 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
                   name="tinggiBadan"
                   labelCol={labelConfig}
                   label="Tinggi Badan">
-                  <Input />
+                  <Input type="number" />
                 </Item>
                 <Item
                   name="beratBadan"
                   labelCol={labelConfig}
                   label="Berat Badan">
-                  <Input />
+                  <Input type="number" />
                 </Item>
                 <Item
                   name="lingkarPerut"
                   labelCol={labelConfig}
                   label="Lingkar Perut">
-                  <Input />
+                  <Input type="number" />
                 </Item>
               </Col>
               <Col span={12}>
                 <Item name="sistole" labelCol={labelConfig} label="Sistole">
-                  <Input />
+                  <Input type="number" />
                 </Item>
                 <Item name="diastole" labelCol={labelConfig} label="Diastole">
-                  <Input />
+                  <Input type="number" />
                 </Item>
               </Col>
               <Divider />

@@ -32,7 +32,7 @@ export const MainPage = () => {
             <MedicRecordForm 
               selectedRecord={em.selectedRecord} 
               isLoading={false} 
-              onSubmit={() => {}} 
+              onSubmit={em.handleSubmitRecord} 
               onCancel={() => {}} />
         </Flex>
       </Col>

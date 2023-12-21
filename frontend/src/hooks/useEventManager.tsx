@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { usePatientsModel } from "./usePatientsModel";
 import { IPatient, IRecord } from "shared/interfaces";
 import dayjs from "dayjs";
+import { useRecordsModel } from "./useRecordsModel";
 
 const EMPTY_PATIENT : IPatient = {
 	id: 0,
@@ -43,6 +44,7 @@ export const useEventManager = () => {
 
 	//model hooks
 	const patientsModel = usePatientsModel();
+	const recordsModel = useRecordsModel();
 
 	useEffect(() => {
 		handleSearchPatient("");
@@ -97,6 +99,29 @@ export const useEventManager = () => {
 		setSelectedRecord(rowData);
 	}
 
+	const handleSubmitRecord = async (data: IRecord) => {
+		if (data.patientId === 0 || data.patientId === undefined) {
+			console.error("patient id is 0")
+			return;
+		}
+
+		const id = data.id;
+
+		console.log("payload is ", data);
+
+		console.log(id, id === 0, id === undefined);
+
+		setIsBiodataFormLoading(true);
+		if (id === 0 || id === undefined) {
+			await recordsModel.create(data);
+		} else {
+			await recordsModel.update(id as number, data);
+		}
+
+		setIsBiodataFormLoading(false);
+		handleClickPatientCard(selectedPatient.id as number);
+	}
+
 	return {
 		filteredPatients,
 		selectedRecord,
@@ -108,5 +133,6 @@ export const useEventManager = () => {
 		handleSubmitBiodata,
 		handleClickAddNewRecord,
 		handleClickMedRecord,
+		handleSubmitRecord,
 	}
 }
