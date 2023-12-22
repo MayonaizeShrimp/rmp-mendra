@@ -64,7 +64,7 @@ export const useEventManager = () => {
 			.includes(searchQuery.toLowerCase());
 		return nameMatches || uuidMatches;
 		});
-		setFilteredPatients(filteredPatients);
+		setFilteredPatients(filteredPatients.sort((a, b) => a.nama.toLowerCase().localeCompare(b.nama.toLowerCase())));
 	};
 
 	const handleClickAddNewPatient = () => {
