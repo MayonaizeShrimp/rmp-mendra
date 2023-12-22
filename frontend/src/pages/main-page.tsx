@@ -5,7 +5,6 @@ import { MedicRecordForm } from "src/partials/medic-record-form";
 import { PatientList } from "src/partials/patient-list";
 
 export const MainPage = () => {
-
   const em = useEventManager();
   
   return (
@@ -28,13 +27,11 @@ export const MainPage = () => {
           />
       </Col>
       <Col span={em.inputMode === "record" ? 7 : 0}>
-        <Flex vertical gap={16} style={{ height: "95vh" }}>
-            <MedicRecordForm 
-              selectedRecord={em.selectedRecord} 
-              isLoading={false} 
-              onSubmit={em.handleSubmitRecord} 
-              onCancel={em.handleCloseRecord} />
-        </Flex>
+        <MedicRecordForm 
+          selectedRecord={em.selectedRecord} 
+          isLoading={false} 
+          onSubmit={em.handleSubmitRecord} 
+          onCancel={em.handleCloseRecord} />
       </Col>
     </Row>
   );
