@@ -159,14 +159,14 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
                   name="terapi"
                   labelCol={labelConfig}
                   label="Terapi"
-                  rules={[{ required: true }]}>
+                  >
                   <TextArea />
                 </Item>
                 <Item
                   name="hasilLab"
                   labelCol={labelConfig}
                   label="Hasil Lab"
-                  rules={[{ required: true }]}>
+                  >
                   <TextArea />
                 </Item>
               </Col>
