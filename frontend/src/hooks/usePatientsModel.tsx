@@ -1,4 +1,3 @@
-import { message } from "antd";
 import { useEffect, useState } from "react";
 import { IPatient } from "shared/interfaces";
 import { Patients } from "src/models/Patients";
