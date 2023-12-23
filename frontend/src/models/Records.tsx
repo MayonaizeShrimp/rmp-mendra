@@ -1,7 +1,7 @@
-import { IPatient, IRecord } from "shared/interfaces";
+import { IRecord } from "shared/interfaces";
 
 const API_URL = "/api/records";
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "";
 
 export const Records = {
 	create: (data: IRecord) : Promise<IRecord> => {

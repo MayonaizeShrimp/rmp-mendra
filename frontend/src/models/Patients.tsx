@@ -1,7 +1,7 @@
 import { IPatient } from "shared/interfaces";
 
 const API_URL = "/api/patients";
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "";
 
 export const Patients = {
 	getAll: () : Promise<IPatient[]> => {
