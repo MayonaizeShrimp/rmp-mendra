@@ -170,8 +170,8 @@ export const BiodataForm = (props: BiodataFormProps) => {
 										labelCol={labelConfig}
 										style={{ marginBottom: 0 }}>
 										<Radio.Group>
-											<Radio value={true}> Pria </Radio>
 											<Radio value={false}> Wanita </Radio>
+											<Radio value={true}> Pria </Radio>
 										</Radio.Group>
 									</Item>
 								</Col>
@@ -205,20 +205,19 @@ export const BiodataForm = (props: BiodataFormProps) => {
 									<Item name="ktp" label="No KTP" labelCol={labelConfig}>
 										<Input type='text'/>
 									</Item>
-									<Item name="patientTypeId" label="Tipe" rules={[{ required: true }]} labelCol={labelConfig}>
-										<Radio.Group>
-											<div style={{ marginBottom: '8px', marginTop: '6px' }}>
-												<Radio value={1}> BPJS </Radio>
-											</div>
-											<div style={{ marginBottom: '8px' }}>
-												<Radio value={2}> Umum </Radio>
-											</div>
-											<div style={{ marginBottom: '8px' }}>
-												<Radio value={3}> BI Aktif </Radio>
-											</div>
-											<div style={{ marginBottom: '8px' }}>
-												<Radio value={4}> BI Pensiun </Radio>
-											</div>
+									<Item 
+									name="patientTypeId" 
+									label="Tipe" 
+									rules={[{ required: true }]} 
+									labelCol={labelConfig}>
+										<Radio.Group style={{ marginBottom: '8px', marginTop: '6px' }}>
+											<Radio value={1}> BPJS </Radio>
+											<br/>
+											<Radio value={2}> Umum </Radio>
+											<br/>
+											<Radio value={3}> BI Aktif </Radio>
+											<br/>
+											<Radio value={4}> BI Pensiun </Radio>
 										</Radio.Group>
 									</Item>
 								</Col>

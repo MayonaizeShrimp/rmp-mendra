@@ -1,4 +1,4 @@
-import { Row, Col, Flex } from "antd";
+import { Row, Col } from "antd";
 import { useEventManager } from "src/hooks/useEventManager";
 import { BiodataForm } from "src/partials/biodata-form";
 import { MedicRecordForm } from "src/partials/medic-record-form";

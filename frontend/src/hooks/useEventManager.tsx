@@ -3,6 +3,7 @@ import { usePatientsModel } from "./usePatientsModel";
 import { IPatient, IRecord } from "shared/interfaces";
 import dayjs from "dayjs";
 import { useRecordsModel } from "./useRecordsModel";
+import { message } from "antd";
 
 const EMPTY_PATIENT : IPatient = {
 	id: 0,
@@ -11,10 +12,10 @@ const EMPTY_PATIENT : IPatient = {
 	ktp: "",
 	noPasien: "",
 	alamat: "",
-	patientTypeId: 0,
+	patientTypeId: 1,
 	alergi: "",
 	hp: "",
-	gender: 0,
+	gender: false,
 	Records: [],
 }
 
@@ -74,7 +75,8 @@ export const useEventManager = () => {
 
 	const handleClickPatientCard = (id: number) => {
 		patientsModel.getById(id)
-			.then(patient => setSelectedPatient(patient));
+			.then(patient => setSelectedPatient(patient))
+			.catch(err => message.error("Tidak bisa terhubung ke server"));
 		setSelectedRecord(EMPTY_RECORD);
 	}
 
@@ -83,9 +85,35 @@ export const useEventManager = () => {
 
 		setIsBiodataFormLoading(true);
 		if (id === 0) {
-			await patientsModel.create(data);
+			patientsModel.create(data).then(res => {
+					if (!res.id || res.id === 0) {
+						console.error(res);
+						throw {message: "error ketika insert ke DB"};
+					}
+
+					patientsModel.getAll();
+					handleClickPatientCard(res.id)
+					message.success(`Pasien ${data.nama} berhasil ditambahkan`);
+				})
+				.catch(err => {
+					if (err.message) message.error(err.message);
+					else message.error(err.name);
+				});
 		} else {
-			await patientsModel.update(id, data);
+			await patientsModel.update(id, data).then((res: any) => {
+				if (res.success) {
+					handleClickPatientCard(id)
+					message.success(`Pasien ${data.nama} berhasil diupdate`);
+					return;
+				}
+
+				console.error(res);
+				throw {message: "error ketika update ke DB"};
+			})
+			.catch(err => {
+				if (err.message) message.error(err.message);
+				else message.error(err.name);
+			});
 		}
 
 		setIsBiodataFormLoading(false);

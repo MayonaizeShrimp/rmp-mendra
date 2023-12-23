@@ -21,7 +21,7 @@ export interface IPatient {
 	patientTypeId: number,
 	alergi: string,
 	hp: string,
-	gender: number,
+	gender: boolean,
 	Records?: IRecord[],
 }
 
