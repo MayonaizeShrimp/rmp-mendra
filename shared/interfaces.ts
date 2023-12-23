@@ -1,11 +1,3 @@
-export interface TestData {
-	key?: number,
-	id: number,
-	name: string,
-	manufacturer: string,
-	expiry_date: string,
-}
-
 export interface IPatientStatus {
 	id: number,
 	nama: string,
@@ -21,7 +13,7 @@ export interface IPatient {
 	patientTypeId: number,
 	alergi: string,
 	hp: string,
-	gender: number,
+	gender: boolean,
 	Records?: IRecord[],
 }
 

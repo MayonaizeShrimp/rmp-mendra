@@ -1,4 +1,3 @@
-import { message } from "antd";
 import { useEffect, useState } from "react";
 import { IPatient } from "shared/interfaces";
 import { Patients } from "src/models/Patients";
@@ -21,37 +20,11 @@ export const usePatientsModel = () => {
 	}
 
 	const create = async (data: IPatient) => {
-		return Patients.create(data)
-			.then(res => {
-				console.log(res);
-				message.success(`Pasien ${data.nama} berhasil ditambahkan`)
-			})
-			.catch(err => {
-				if (err.message) {
-					console.error(err.message)
-					message.error(err.message);
-					return;
-				}
-
-				console.error(err);
-			});
+		return Patients.create(data);
 	}
 
 	const update = async (id: number, data: IPatient) => {
 		return Patients.update(id, data)
-			.then(res => {
-				console.log(res);
-				message.success(`Pasien ${data.nama} berhasil diupdate`)
-			})
-			.catch(err => {
-				if (err.message) {
-					console.error(err.message)
-					message.error(err.message);
-					return;
-				}
-
-				console.error(err);
-			});
 	}
 
 	return {

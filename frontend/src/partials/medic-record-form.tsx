@@ -37,7 +37,6 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData] = Form.useForm<IRecordForm>();
 
-  const isPatientIdValid = props.selectedRecord.patientId;
 	const isRecordValid = props.selectedRecord.id;
 	const initialValue = {
 		...props.selectedRecord,
