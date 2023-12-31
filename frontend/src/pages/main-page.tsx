@@ -21,6 +21,7 @@ export const MainPage = () => {
           selected_patient={em.selectedPatient}
           isLoading={em.isBiodataFormLoading}
           onSubmit={em.handleSubmitBiodata}
+          onDelete={em.handleDeletePatient} 
           onClickNewRecord={em.handleClickAddNewRecord}
           onClickRecord={em.handleClickMedRecord}
           handleCheckNoPasienUnique={em.handleCheckNoPasienUnique}

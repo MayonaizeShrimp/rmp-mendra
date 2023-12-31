@@ -120,6 +120,22 @@ export const useEventManager = () => {
 		patientsModel.getAll();
 	}
 
+	const handleDeletePatient = async (data: IPatient) => {
+		const id = data.id as number;
+		setIsBiodataFormLoading(true);
+		  await patientsModel.remove(id, data).then((res: any) => {
+			if (res.success) {
+				handleClickPatientCard(id)
+				message.success(`Pasien ${data.nama} berhasil `);
+				return;
+			}
+		})
+		  setIsBiodataFormLoading(false);
+		  patientsModel.getAll(); // Refresh the patient list after deletion
+		}
+	  
+	  
+
 	const handleClickAddNewRecord = () => {
 		setSelectedRecord({
 			...EMPTY_RECORD,
@@ -172,6 +188,7 @@ export const useEventManager = () => {
 		selectedPatient,
 		isBiodataFormLoading,
 		handleSearchPatient,
+		handleDeletePatient,
 		handleClickAddNewPatient,
 		handleClickPatientCard,
 		handleSubmitBiodata,

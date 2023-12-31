@@ -34,4 +34,17 @@ export const Patients = {
 
 		return fetch(`${BASE_URL}${API_URL}/${id}`, payload).then(res => res.json());
 	},
+	async delete(id: number, data: IPatient): Promise<void> {
+		const payload: RequestInit = {
+		  method: 'DELETE',
+		  headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		  },
+		  body: JSON.stringify(data)
+		};
+	  
+		return fetch(`${BASE_URL}${API_URL}/${id}`, payload).then(res => res.json());
+	  }
+	  
 }
