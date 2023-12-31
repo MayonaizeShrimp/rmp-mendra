@@ -98,7 +98,7 @@ interface IPatientForm extends IPatient {
 export const BiodataForm = (props: BiodataFormProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  
+
   const [formData] = Form.useForm<IPatientForm>();
   // const [selectedPatientId, setSelectedPatientId] = useState(null)
   const isPatientIdValid = props.selected_patient.id;
@@ -138,7 +138,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
       id: props.selected_patient.id,
       tanggalLahir: values.tanggalLahirObject.format("YYYY-MM-DD"),
     };
-  
+
     try {
       // Assuming props.onDelete returns a Promise
       await props.onDelete(data);
@@ -150,9 +150,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
       setIsModalOpen(false); // Close the modal regardless of success or failure
     }
   };
-  
-  
-  
+
   const handleClickNewRecords = () => {
     if (isPatientIdValid) props.onClickNewRecord();
   };
