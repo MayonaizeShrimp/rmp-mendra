@@ -130,13 +130,15 @@ export const useEventManager = () => {
 			}
 
 			//reset biodata form balik ke normal? atau balik ke patient lain
+			patientsModel.getAll();
 			handleClickAddNewPatient()
 			message.success(`Pasien ${patient.nama} berhasil dihapus`);
 		})
 		.catch(err => {
 			if (err.message) message.error(err.message);
 			else message.error(err.name);
-		});
+		})
+		.finally(() => setIsBiodataFormLoading(false));
 	};
 
 	const handleClickAddNewRecord = () => {
