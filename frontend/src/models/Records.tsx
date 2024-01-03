@@ -1,7 +1,7 @@
 import { IRecord } from "shared/interfaces";
 
 const API_URL = "/api/records";
-const BASE_URL = "";
+const BASE_URL = "http://localhost:5000";
 
 export const Records = {
 	create: (data: IRecord) : Promise<IRecord> => {

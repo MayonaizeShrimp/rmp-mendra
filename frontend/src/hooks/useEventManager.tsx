@@ -100,7 +100,7 @@ export const useEventManager = () => {
 					else message.error(err.name);
 				});
 		} else {
-			await patientsModel.update(id, data).then((res: any) => {
+			patientsModel.update(id, data).then((res: any) => {
 				if (res.success) {
 					handleClickPatientCard(id)
 					message.success(`Pasien ${data.nama} berhasil diupdate`);
@@ -120,32 +120,24 @@ export const useEventManager = () => {
 		patientsModel.getAll();
 	}
 
-	const handleDeletePatient = async (id: number) => {
+	const handleDeletePatient = async (patient: IPatient) => {
 		setIsBiodataFormLoading(true);
-	  
-		try {
-		  const response = await patientsModel.remove(id).then((res: any) => {
-			if (res && res.success) {
-			  handleClickPatientCard(id);
-			  message.success(`Pasien berhasil dihapus`);
-			  // Optionally, you can trigger additional actions or update the UI
-			} else {
-			  console.error(response);
-			  message.error('Gagal menghapus pasien');
+
+		patientsModel.remove(patient.id as number).then(res => {
+			if (!res || !res.success) {
+				console.error(res);
+				throw {message: "error ketika update ke DB"};
 			}
-		  });
-		} catch (error) {
-		  console.error('Error deleting patient:', error);
-		  message.error('Terjadi kesalahan saat menghapus pasien');
-		} finally {
-		  setIsBiodataFormLoading(false);
-		  patientsModel.getAll(); // Refresh the patient list after deletion
-		}
-	  };
-	  
-	  
-	  
-	  
+
+			//reset biodata form balik ke normal? atau balik ke patient lain
+			handleClickAddNewPatient()
+			message.success(`Pasien ${patient.nama} berhasil dihapus`);
+		})
+		.catch(err => {
+			if (err.message) message.error(err.message);
+			else message.error(err.name);
+		});
+	};
 
 	const handleClickAddNewRecord = () => {
 		setSelectedRecord({

@@ -21,7 +21,6 @@ import "../style.css";
 import { VerticalLayout } from "src/components/vertical-layout";
 import { HeaderLayout } from "src/components/header-layout";
 import { ContentLayout } from "src/components/content-layout";
-import { usePatientsModel } from "../hooks/usePatientsModel";
 
 
 const { Item } = Form;
@@ -87,7 +86,7 @@ interface BiodataFormProps {
   selected_patient: IPatient;
   isLoading: boolean;
   onSubmit: (val: IPatient) => void;
-  onDelete: (id: number) => void;
+  onDelete: (val: IPatient) => void;
   onClickNewRecord: Function;
   onClickRecord: Function;
   handleCheckNoPasienUnique: (val: string) => boolean;
@@ -136,7 +135,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
 
   const handleDeleteConfirmation = async () => {
     setIsDeleteModalOpen(false);
-    props.onDelete(props.selected_patient.id as number);
+    props.onDelete(props.selected_patient);
   };
 
   const handleClickNewRecords = () => {

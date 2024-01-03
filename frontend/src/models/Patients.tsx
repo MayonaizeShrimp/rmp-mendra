@@ -1,7 +1,7 @@
 import { IPatient } from "shared/interfaces";
 
 const API_URL = "/api/patients";
-const BASE_URL = "";
+const BASE_URL = "http://localhost:5000";
 
 export const Patients = {
 	getAll: () : Promise<IPatient[]> => {
@@ -34,7 +34,7 @@ export const Patients = {
 
 		return fetch(`${BASE_URL}${API_URL}/${id}`, payload).then(res => res.json());
 	},
-	delete: (id: number): Promise<IPatient> => {
+	delete: (id: number): Promise<any> => {
 		const payload: RequestInit = {
 		  method: 'DELETE',
 		  headers: {
