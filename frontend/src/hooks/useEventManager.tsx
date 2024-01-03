@@ -120,19 +120,30 @@ export const useEventManager = () => {
 		patientsModel.getAll();
 	}
 
-	const handleDeletePatient = async (data: IPatient) => {
-		const id = data.id as number;
+	const handleDeletePatient = async (id: number) => {
 		setIsBiodataFormLoading(true);
-		  await patientsModel.remove(id, data).then((res: any) => {
-			if (res.success) {
-				handleClickPatientCard(id)
-				message.success(`Pasien ${data.nama} berhasil `);
-				return;
+	  
+		try {
+		  const response = await patientsModel.remove(id).then((res: any) => {
+			if (res && res.success) {
+			  handleClickPatientCard(id);
+			  message.success(`Pasien berhasil dihapus`);
+			  // Optionally, you can trigger additional actions or update the UI
+			} else {
+			  console.error(response);
+			  message.error('Gagal menghapus pasien');
 			}
-		})
+		  });
+		} catch (error) {
+		  console.error('Error deleting patient:', error);
+		  message.error('Terjadi kesalahan saat menghapus pasien');
+		} finally {
 		  setIsBiodataFormLoading(false);
 		  patientsModel.getAll(); // Refresh the patient list after deletion
 		}
+	  };
+	  
+	  
 	  
 	  
 

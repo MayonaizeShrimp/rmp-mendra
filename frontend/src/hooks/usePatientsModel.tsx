@@ -30,10 +30,9 @@ export const usePatientsModel = () => {
     return Patients.update(id, data);
   };
 
-const remove = async (id: number, data: IPatient) => {
-  return Patients.delete(id, data);
-};
-
+  const remove = (id: number): Promise<IPatient> => {
+    return Patients.delete(id);
+  };
 
   return {
     patients,

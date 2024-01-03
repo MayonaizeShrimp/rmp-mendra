@@ -11,6 +11,7 @@ import {
   Row,
   Table,
   Typography,
+  message
 } from "antd";
 import { ColumnType } from "antd/es/table";
 import { useEffect, useState } from "react";
@@ -20,6 +21,8 @@ import "../style.css";
 import { VerticalLayout } from "src/components/vertical-layout";
 import { HeaderLayout } from "src/components/header-layout";
 import { ContentLayout } from "src/components/content-layout";
+import { usePatientsModel } from "../hooks/usePatientsModel";
+
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -84,7 +87,7 @@ interface BiodataFormProps {
   selected_patient: IPatient;
   isLoading: boolean;
   onSubmit: (val: IPatient) => void;
-  onDelete: (val: IPatient) => void;
+  onDelete: (id: number) => void;
   onClickNewRecord: Function;
   onClickRecord: Function;
   handleCheckNoPasienUnique: (val: string) => boolean;
@@ -102,6 +105,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
   const [formData] = Form.useForm<IPatientForm>();
   // const [selectedPatientId, setSelectedPatientId] = useState(null)
   const isPatientIdValid = props.selected_patient.id;
+  const patientsModel = usePatientsModel();
   const initialValue = {
     ...props.selected_patient,
     tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
@@ -132,23 +136,10 @@ export const BiodataForm = (props: BiodataFormProps) => {
   };
 
   const handleDeleteConfirmation = async () => {
-    const values = formData.getFieldsValue();
-    const data: IPatient = {
-      ...values,
-      id: props.selected_patient.id,
-      tanggalLahir: values.tanggalLahirObject.format("YYYY-MM-DD"),
-    };
-
-    try {
-      // Assuming props.onDelete returns a Promise
-      await props.onDelete(data);
-      // Optionally: Provide feedback or perform other actions upon successful deletion
-    } catch (error) {
-      console.error("Error during deletion:", error);
-      // Optionally: Handle error feedback or perform other actions upon deletion failure
-    } finally {
-      setIsModalOpen(false); // Close the modal regardless of success or failure
-    }
+    const id = props.selected_patient.id as number;
+  
+    setIsDeleteModalOpen(false);
+    props.onDelete(id);
   };
 
   const handleClickNewRecords = () => {

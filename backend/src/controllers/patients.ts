@@ -44,4 +44,22 @@ patientsRouter.put("/:id", async(req, res) => {
 		.catch(err => res.status(500).json({error: err}));
 });
 
+patientsRouter.delete("/:id", async (req, res) => {
+  const condition = {
+    where: { id: req.params.id },
+  };
+
+  Patient.destroy(condition)
+    .then((affectedRows) => {
+      if (affectedRows === 0) {
+        return res.status(404).json({ error: "Patient not found" });
+      }
+      res.json({ success: true });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
 export default patientsRouter; 
