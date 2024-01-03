@@ -105,7 +105,6 @@ export const BiodataForm = (props: BiodataFormProps) => {
   const [formData] = Form.useForm<IPatientForm>();
   // const [selectedPatientId, setSelectedPatientId] = useState(null)
   const isPatientIdValid = props.selected_patient.id;
-  const patientsModel = usePatientsModel();
   const initialValue = {
     ...props.selected_patient,
     tanggalLahirObject: dayjs(props.selected_patient.tanggalLahir),
@@ -136,10 +135,8 @@ export const BiodataForm = (props: BiodataFormProps) => {
   };
 
   const handleDeleteConfirmation = async () => {
-    const id = props.selected_patient.id as number;
-  
     setIsDeleteModalOpen(false);
-    props.onDelete(id);
+    props.onDelete(props.selected_patient.id as number);
   };
 
   const handleClickNewRecords = () => {
@@ -173,10 +170,10 @@ export const BiodataForm = (props: BiodataFormProps) => {
       <Modal
         open={isDeleteModalOpen}
         title="Hapus Pasien"
-        onOk={handleDeleteConfirmation}
+        onOk={() => handleDeleteConfirmation()}
         onCancel={() => setIsDeleteModalOpen(false)}
       >
-        <p>Apakah Anda yakin ingin menghapus data pasien?</p>
+        Apakah Anda yakin ingin menghapus data pasien?
       </Modal>
 
       <Modal
@@ -204,11 +201,15 @@ export const BiodataForm = (props: BiodataFormProps) => {
               size="large"
               type="primary"
               danger
+              disabled={!props.selected_patient.id}
               onClick={handleDeleteButtonClick}
             >
               Hapus
             </Button>
-            <Button size="large" htmlType="reset">
+            <Button 
+              size="large" 
+              htmlType="reset"
+              disabled={!props.selected_patient.id}>
               Reset
             </Button>
           </Flex>
