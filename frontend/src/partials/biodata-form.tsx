@@ -200,7 +200,7 @@ export const BiodataForm = (props: BiodataFormProps) => {
               size="large"
               type="primary"
               danger
-              disabled={!props.selected_patient.id}
+              disabled={!props.selected_patient.id || props.selected_patient.Records?.length !== 0}
               onClick={handleDeleteButtonClick}
             >
               Hapus
