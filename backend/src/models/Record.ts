@@ -18,6 +18,12 @@ export class Record extends Model<IRecord, RecordCreationAttributes> {
 	declare dxPrimer: string;
 	declare terapi: string;
 	declare hasilLab: string;
+	declare tindakanMedis: string
+	declare rujukan: string
+	declare respirasi: string
+	declare denyutNadi: string
+	declare suhuBadan: number
+	declare note: string
 	declare patientId: ForeignKey<Patient['id']>;
 	declare patient?: NonAttribute<Patient>;
 }
@@ -40,6 +46,12 @@ Record.init(
 		dxPrimer: DataTypes.STRING,
 		terapi: DataTypes.STRING,
 		hasilLab: DataTypes.STRING,
+		tindakanMedis: DataTypes.STRING,
+		rujukan: DataTypes.STRING,
+		respirasi: DataTypes.STRING,
+		denyutNadi: DataTypes.STRING,
+		suhuBadan: DataTypes.INTEGER,
+		note: DataTypes.STRING,
 		patientId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

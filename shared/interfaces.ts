@@ -30,6 +30,12 @@ export interface IRecord {
 	dxPrimer: string,
 	terapi: string,
 	hasilLab: string,
+	tindakanMedis: string,
+	rujukan: string,
+	respirasi: string,
+	denyutNadi: string,
+	suhuBadan: number,
+	note: string,
 	patientId: number,
 }
 

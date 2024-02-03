@@ -43,6 +43,24 @@ module.exports = {
       hasilLab: {
         type: Sequelize.STRING
       },
+      tindakanMedis: {
+        type: Sequelize.STRING
+      },
+      rujukan: {
+        type: Sequelize.STRING
+      },
+      respirasi: {
+        type: Sequelize.STRING
+      },
+      denyutNadi: {
+        type: Sequelize.STRING
+      },
+      suhuBadan: {
+        type: Sequelize.INTEGER
+      },
+      note: {
+        type: Sequelize.STRING
+      },
       patientId: {
         type: Sequelize.INTEGER,
         references: {

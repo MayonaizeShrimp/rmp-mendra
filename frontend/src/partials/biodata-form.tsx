@@ -34,6 +34,13 @@ const recordColumns: ColumnType<IRecord>[] = [
     title: "Tanggal",
     dataIndex: "tanggal",
     render: (d) => dayjs(d).format("DD/MM/YY"),
+    defaultSortOrder: "ascend",
+    sorter: (a, b) => {
+      const dateA = dayjs(a.tanggal, "DD/MM/YY");
+      const dateB = dayjs(b.tanggal, "DD/MM/YY");
+
+      return dateA.isBefore(dateB) ? -1 : dateA.isAfter(dateB) ? 1 : 0;
+    },
   },
   {
     key: "tinggiBadan",
@@ -61,8 +68,25 @@ const recordColumns: ColumnType<IRecord>[] = [
     dataIndex: "diastole",
   },
   {
+    key: "suhuBadan",
+    title: "SB",
+    dataIndex: "suhuBadan",
+  },
+  {
+    title: "Respirasi",
+    dataIndex: "respirasi",
+  },
+  {
+    title: "Denyut Nadi",
+    dataIndex: "denyutNadi",
+  },
+  {
     title: "Keluhan",
     dataIndex: "keluhan",
+  },
+  {
+    title: "Note",
+    dataIndex: "note",
   },
   {
     title: "ICD 10",
@@ -79,6 +103,14 @@ const recordColumns: ColumnType<IRecord>[] = [
   {
     title: "Hasil Lab",
     dataIndex: "hasilLab",
+  },
+  {
+    title: "Rujukan",
+    dataIndex: "rujukan",
+  },
+  {
+    title: "Tindakan Medis",
+    dataIndex: "tindakanMedis",
   },
 ];
 
