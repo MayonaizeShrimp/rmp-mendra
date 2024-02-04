@@ -31,6 +31,12 @@ const EMPTY_RECORD : IRecord = {
 	dxPrimer: "",
 	terapi: "",
 	hasilLab: "",
+	tindakanMedis: "",
+	rujukan : "",
+	respirasi: "",
+	denyutNadi: "",
+	suhuBadan: 0,
+	note: "",
 	patientId: 0
 }
 

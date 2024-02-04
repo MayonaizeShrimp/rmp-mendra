@@ -69,109 +69,156 @@ export const MedicRecordForm = (props: MedicRecordFormProps) => {
   }
 
   return (
-    <Form 
-      form={formData} 
+    <Form
+      form={formData}
       disabled={props.isLoading}
-			initialValues={initialValue}
+      initialValues={initialValue}
       labelWrap={true}
-      labelAlign="left" 
-      colon={false} 
-      onFinish={handleFormFinish}>
+      labelAlign="left"
+      colon={false}
+      onFinish={handleFormFinish}
+    >
       <Modal
-				open={isModalOpen}
-				title={isRecordValid ? "Edit Kunjungan" : "Kunjungan Baru"}
-				onOk={() => handleSubmitData()}
-				onCancel={() => setIsModalOpen(false)}>
-				<p>{isRecordValid ? "Apakah Anda yakin ingin ubah data kunjungan?" : "Apakah Anda yakin ingin simpan data kunjungan baru?"}</p>
-			</Modal>
+        open={isModalOpen}
+        title={isRecordValid ? "Edit Kunjungan" : "Kunjungan Baru"}
+        onOk={() => handleSubmitData()}
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <p>
+          {isRecordValid
+            ? "Apakah Anda yakin ingin ubah data kunjungan?"
+            : "Apakah Anda yakin ingin simpan data kunjungan baru?"}
+        </p>
+      </Modal>
       <Flex vertical gap={16} style={{ maxHeight: "95vh" }}>
         <Flex justify="space-between">
-          <Typography.Title level={2} style={{ margin: 0 }}>Kunjungan</Typography.Title>
+          <Typography.Title level={2} style={{ margin: 0 }}>
+            Kunjungan
+          </Typography.Title>
           <Flex justify="end" gap={8}>
-            <Button size="large" type="primary" htmlType="submit">Simpan</Button>
-            <Button size="large" htmlType="reset">Reset</Button>
-            <Button size="large" type="text" onClick={() => props.onCancel()}><CloseOutlined /></Button>
+            <Button size="large" type="primary" htmlType="submit">
+              Simpan
+            </Button>
+            <Button size="large" htmlType="reset">
+              Reset
+            </Button>
+            <Button size="large" type="text" onClick={() => props.onCancel()}>
+              <CloseOutlined />
+            </Button>
           </Flex>
         </Flex>
-          <Card className="scrollToHeight">
-            <Row gutter={8}>
-              <Col span={24}>
-                <Item
-                  name="tanggalObject"
-                  label="Tanggal"
-                  style={{ marginBottom: 0 }}>
-                  <DatePicker value={dayjs()} format="DD MMMM YYYY" />
-                </Item>
-              </Col>
-              <Divider />
-              <Col span={12}>
-                <Item
-                  name="tinggiBadan"
-                  labelCol={labelConfig}
-                  label="Tinggi Badan">
-                  <Input type="number" />
-                </Item>
-                <Item
-                  name="beratBadan"
-                  labelCol={labelConfig}
-                  label="Berat Badan">
-                  <Input type="number" />
-                </Item>
-                <Item
-                  name="lingkarPerut"
-                  labelCol={labelConfig}
-                  label="Lingkar Perut">
-                  <Input type="number" />
-                </Item>
-              </Col>
-              <Col span={12}>
-                <Item name="sistole" labelCol={labelConfig} label="Sistole">
-                  <Input type="number" />
-                </Item>
-                <Item name="diastole" labelCol={labelConfig} label="Diastole">
-                  <Input type="number" />
-                </Item>
-              </Col>
-              <Divider />
-              <Col span={24}>
-                <Item
-                  name="keluhan"
-                  labelCol={labelConfig}
-                  label="Keluhan"
-                  rules={[{ required: true }]}>
-                  <Input />
-                </Item>
-                <Item
-                  name="icd10"
-                  labelCol={labelConfig}
-                  label="ICD 10"
-                  rules={[{ required: true }]}>
-                  <Input />
-                </Item>
-                <Item
-                  name="dxPrimer"
-                  labelCol={labelConfig}
-                  label="Dx/Primer"
-                  rules={[{ required: true }]}>
-                  <TextArea />
-                </Item>
-                <Item
-                  name="terapi"
-                  labelCol={labelConfig}
-                  label="Terapi"
-                  >
-                  <TextArea />
-                </Item>
-                <Item
-                  name="hasilLab"
-                  labelCol={labelConfig}
-                  label="Hasil Lab"
-                  >
-                  <TextArea />
-                </Item>
-              </Col>
-            </Row>
-          </Card>
+        <Card className="scrollToHeight">
+          <Row gutter={8}>
+            <Col span={24}>
+              <Item
+                name="tanggalObject"
+                label="Tanggal"
+                style={{ marginBottom: 0 }}
+              >
+                <DatePicker value={dayjs()} format="DD MMMM YYYY" />
+              </Item>
+            </Col>
+            <Divider />
+            <Col span={12}>
+              <Item
+                name="tinggiBadan"
+                labelCol={labelConfig}
+                label="Tinggi Badan"
+                rules={[{ required: true }]}
+              >
+                <Input type="number" />
+              </Item>
+              <Item
+                name="beratBadan"
+                labelCol={labelConfig}
+                label="Berat Badan"
+                rules={[{ required: true }]}
+              >
+                <Input type="number" />
+              </Item>
+              <Item
+                name="lingkarPerut"
+                labelCol={labelConfig}
+                label="Lingkar Perut"
+                rules={[{ required: true }]}
+              >
+                <Input type="number" />
+              </Item>
+              <Item
+                name="denyutNadi"
+                labelCol={labelConfig}
+                label="Denyut Nadi"
+              >
+                <Input />
+              </Item>
+            </Col>
+            <Col span={12}>
+              <Item name="sistole" labelCol={labelConfig} label="Sistole">
+                <Input type="number" />
+              </Item>
+              <Item name="diastole" labelCol={labelConfig} label="Diastole">
+                <Input type="number" />
+              </Item>
+              <Item name="respirasi" labelCol={labelConfig} label="Respirasi">
+                <Input  />
+              </Item>
+              <Item name="suhuBadan" labelCol={labelConfig} label="Suhu Badan">
+                <Input type="number" />
+              </Item>
+            </Col>
+            <Divider />
+            <Col span={24}>
+              <Item name="note" labelCol={labelConfig} label="Note">
+                <TextArea />
+              </Item>
+              <Item
+                name="keluhan"
+                labelCol={labelConfig}
+                label="Keluhan"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Item>
+              <Item
+                name="icd10"
+                labelCol={labelConfig}
+                label="ICD 10"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Item>
+              <Item
+                name="dxPrimer"
+                labelCol={labelConfig}
+                label="Dx/Primer"
+                rules={[{ required: true }]}
+              >
+                <TextArea />
+              </Item>
+              <Item
+                name="terapi"
+                labelCol={labelConfig}
+                label="Terapi"
+                rules={[{ required: true }]}
+              >
+                <TextArea />
+              </Item>
+              <Item name="hasilLab" labelCol={labelConfig} label="Hasil Lab">
+                <TextArea />
+              </Item>
+              <Item name="rujukan" labelCol={labelConfig} label="Rujukan">
+                <TextArea />
+              </Item>
+              <Item
+                name="tindakanMedis"
+                labelCol={labelConfig}
+                label="Tindakan Medis"
+              >
+                <TextArea />
+              </Item>
+            </Col>
+          </Row>
+        </Card>
       </Flex>
     </Form>
   );
